@@ -63,7 +63,7 @@ if __name__ == "__main__":
         "--input_folder",
         type=str,
         default="examples/img_concat",
-        help="the folder that contents images",
+        help="the folder that contains images",
     )
     parser.add_argument(
         "--out_path",

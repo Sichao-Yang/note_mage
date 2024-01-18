@@ -1,0 +1,25 @@
+[2024-01-19 00:20:17,047][typora_red_img_remover.py][line:41][INFO] Processing folder: C:\Users\Administrator\Desktop\tmp\file_management\src\typora_parser\2_typora_red_img_remover\data
+[2024-01-19 00:20:17,049][typora_red_img_remover.py][line:44][INFO] Total file count: 24
+[2024-01-19 00:20:17,050][typora_red_img_remover.py][line:46][INFO] Total md file count: 1
+[2024-01-19 00:20:17,050][typora_red_img_remover.py][line:50][INFO] All md in this folder:
+ C:\Users\Administrator\Desktop\tmp\file_management\src\typora_parser\2_typora_red_img_remover\data\DimensionReduction.md
+
+[2024-01-19 00:20:17,051][typora_red_img_remover.py][line:65][WARNING] Warnning format(.pdf) detected in img filelist after md remover: C:\Users\Administrator\Desktop\tmp\file_management\src\typora_parser\2_typora_red_img_remover\data\media\6_convset.pdf
+[2024-01-19 00:20:17,051][typora_red_img_remover.py][line:114][INFO] 
+Img path extracting... check for hyper-link & abs path, remove method==True
+[2024-01-19 00:20:17,052][typora_red_img_remover.py][line:120][INFO] [Imgpath Extraction]Auto remove for AbsolutePath and HyperLink is opened
+[2024-01-19 00:20:17,053][typora_red_img_remover.py][line:100][WARNING] HyperLink detected in md imgpath: 
+https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/T-SNE_Embedding_of_MNIST.png/1024px-T-SNE_Embedding_of_MNIST.png
+C:\Users\Administrator\Desktop\tmp\file_management\src\typora_parser\2_typora_red_img_remover\data\DimensionReduction.md
+[2024-01-19 00:20:17,055][typora_red_img_remover.py][line:158][INFO] 
+All redundant paths are:
+[2024-01-19 00:20:17,055][typora_red_img_remover.py][line:160][INFO] C:\Users\Administrator\Desktop\tmp\file_management\src\typora_parser\2_typora_red_img_remover\data\media\1024px-T-SNE_Embedding_of_MNIST.png
+[2024-01-19 00:20:17,055][typora_red_img_remover.py][line:160][INFO] C:\Users\Administrator\Desktop\tmp\file_management\src\typora_parser\2_typora_red_img_remover\data\media\1hjo4XLAm_ww93DPYe3aSVQ-16401777169665.png
+[2024-01-19 00:20:17,056][typora_red_img_remover.py][line:160][INFO] C:\Users\Administrator\Desktop\tmp\file_management\src\typora_parser\2_typora_red_img_remover\data\media\1mO-hgV2ZxR7-NTqlPYZ-uQ.png
+[2024-01-19 00:20:17,056][typora_red_img_remover.py][line:160][INFO] C:\Users\Administrator\Desktop\tmp\file_management\src\typora_parser\2_typora_red_img_remover\data\media\1NDTdukI_hbf7J-z2hShz_g.png
+[2024-01-19 00:20:17,056][typora_red_img_remover.py][line:160][INFO] C:\Users\Administrator\Desktop\tmp\file_management\src\typora_parser\2_typora_red_img_remover\data\media\1tZ-Z481ITAoWLDVoNMSOzA.png
+[2024-01-19 00:20:17,057][typora_red_img_remover.py][line:160][INFO] C:\Users\Administrator\Desktop\tmp\file_management\src\typora_parser\2_typora_red_img_remover\data\media\1Uv7z-el3YSutoonlVal6Lw.png
+[2024-01-19 00:20:17,057][typora_red_img_remover.py][line:160][INFO] C:\Users\Administrator\Desktop\tmp\file_management\src\typora_parser\2_typora_red_img_remover\data\media\1_KfLn5xj1dw7y3P4jdgnig.png
+[2024-01-19 00:20:17,057][typora_red_img_remover.py][line:160][INFO] C:\Users\Administrator\Desktop\tmp\file_management\src\typora_parser\2_typora_red_img_remover\data\media\6_convset.pdf
+[2024-01-19 00:20:17,057][typora_red_img_remover.py][line:160][INFO] C:\Users\Administrator\Desktop\tmp\file_management\src\typora_parser\2_typora_red_img_remover\data\media\test.txt
+[2024-01-19 00:20:17,063][typora_red_img_remover.py][line:184][INFO] All redundant files are moved to C:\Users\Administrator\Desktop\tmp\file_management\src\typora_parser\2_typora_red_img_remover\data\red_files waiting for manual verification

@@ -1,2 +1,0 @@
-很多第7章sampling和第14章概率图的笔记都移到了：
-0_notes_all\2_concept\000_topics_x
