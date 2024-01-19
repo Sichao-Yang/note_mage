@@ -1,16 +1,14 @@
 import os, sys
 from os import path as osp
-import logging
 import re
 import shutil
 import argparse
 import sys
 
-sys.path.append(osp.abspath(osp.join(osp.dirname(__file__), '../../')))
+sys.path.append(osp.abspath(osp.join(osp.dirname(__file__), "../")))
 from utils import *
 
 DEBUG = False
-
 
 
 class typora_img_red_remover:
@@ -32,15 +30,20 @@ class typora_img_red_remover:
         2. check if there is any unmatched relative path in md files (potential broken img link)
     """
 
-    def __init__(self, path, ignore_formats) -> None:
-        self.root = osp.abspath(path)
+    def __init__(self, input_folder, output_folder, ignore_formats) -> None:
+        # working only on output_folder
+        if osp.exists(output_folder):
+            shutil.rmtree(output_folder)
+        os.makedirs(output_folder)
+        shutil.copytree(src=input_folder, dst=output_folder, dirs_exist_ok=True)
+
+        self.work_dir = osp.abspath(output_folder)
         self.ignore_items = ignore_formats
-        self.ignore_items.extend([".log", osp.basename(__file__)])
 
     def img_src_extract(self):
-        logger.info(f"Processing folder: {self.root}")
+        logger.info(f"Processing folder: {self.work_dir}")
         self.all_src_imgs = []
-        self.ext_all_files(self.root)
+        self.ext_all_files(self.work_dir)
         logger.info(f"Total file count: {len(self.all_src_imgs)}")
         self.ext_mds()
         logger.info(f"Total md file count: {len(self.mdpaths)}")
@@ -62,9 +65,7 @@ class typora_img_red_remover:
         for f in self.all_src_imgs:
             for fmt in warn_fmt:
                 if fmt in f:
-                    logger.warn(
-                        f"Warnning format({fmt}) detected in img filelist after md remover: {f}"
-                    )
+                    logger.warn(f"Warnning format({fmt}) detected in img filelist after md remover: {f}")
 
     def ext_all_files(self, dir):
         ps = os.listdir(dir)
@@ -111,15 +112,11 @@ class typora_img_red_remover:
         因为可能有多个图片引用同一地址的情况，所以要做一下set处理
         """
         # txt = "test ![fdajk fda ](media/a/bfds.png) testse ![fdajfdsk](meddifds a/b/bfds.png) test"
-        logger.info(
-            f"\nImg path extracting... check for hyper-link & abs path, remove method=={remove}"
-        )
+        logger.info(f"\nImg path extracting... check for hyper-link & abs path, remove method=={remove}")
         global IMGPATTERNS
         patterns = IMGPATTERNS
         if remove:
-            logger.info(
-                f"[Imgpath Extraction]Auto remove for AbsolutePath and HyperLink is opened"
-            )
+            logger.info(f"[Imgpath Extraction]Auto remove for AbsolutePath and HyperLink is opened")
         self.x = [re.compile(y) for y in patterns]
 
         self.all_used_imgs = []
@@ -145,7 +142,7 @@ class typora_img_red_remover:
 
     def get_red_paths(self):
         self.red_paths = self.all_src_imgs.copy()
-        # self.all_used_imgs = [osp.abspath(osp.join(self.root,i)) for i in self.all_used_imgs]
+        # self.all_used_imgs = [osp.abspath(osp.join(self.work_dir,i)) for i in self.all_used_imgs]
         for i in self.all_used_imgs:
             try:
                 self.red_paths.remove(
@@ -163,11 +160,11 @@ class typora_img_red_remover:
 
     def remove_red_paths(self, method="manual_veri"):
         if method == "manual_veri":
-            tar = osp.join(self.root, "red_files")
+            tar = osp.join(self.work_dir, "red_files")
             os.makedirs(tar, exist_ok=True)
             for i in self.red_paths:
                 ignore = False
-                o = i.replace(self.root, tar)
+                o = i.replace(self.work_dir, tar)
                 d = osp.dirname(o)
                 if not osp.exists(d):
                     os.makedirs(d)
@@ -181,9 +178,7 @@ class typora_img_red_remover:
                     shutil.move(i, o)
                 except Exception as e:
                     logger.warn(e)
-            logger.info(
-                f"All redundant files are moved to {tar} waiting for manual verification"
-            )
+            logger.info(f"All redundant files are moved to {tar} waiting for manual verification")
 
     def run(self):
         self.img_src_extract()
@@ -203,6 +198,12 @@ if __name__ == "__main__":
         help="the folder that contains markdown files",
     )
     parser.add_argument(
+        "--output_folder",
+        type=str,
+        default="data",
+        help="the folder that contains new markdown files",
+    )
+    parser.add_argument(
         "--ignore_formats",
         nargs="+",
         help="the folder that contains markdown files",
@@ -213,6 +214,6 @@ if __name__ == "__main__":
     logger = get_logger(filename="remover.log", verb_level="info", method="w2file")
 
     tp = typora_img_red_remover(
-        path=args.input_folder, ignore_formats=args.ignore_formats
+        input_folder=args.input_folder, output_folder=args.output_folder, ignore_formats=args.ignore_formats
     )
     tp.run()

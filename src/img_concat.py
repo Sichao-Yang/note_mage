@@ -3,6 +3,10 @@ import os
 import argparse
 from pathlib import Path
 from os import path as osp
+import sys
+from pprint import pformat
+sys.path.append(osp.abspath(osp.dirname(__file__)))
+from utils import *
 
 
 def resize_all(images):
@@ -58,6 +62,7 @@ def concate_to_pdf(images, file_path="out.pdf"):
 
 
 if __name__ == "__main__":
+    logger = get_logger(filename="imgcat.log", verb_level="info", method="w2file")
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--input_folder",
@@ -77,9 +82,7 @@ if __name__ == "__main__":
         default="v",
         help="the direction for concatenation",
     )
-    parser.add_argument(
-        "-v", "--verbose", action="store_true", help="increase output verbosity"
-    )
+    parser.add_argument("-v", "--verbose", action="store_true", help="increase output verbosity")
     args = parser.parse_args()
 
     supported_img_format = [".jpg", ".png"]
@@ -89,16 +92,16 @@ if __name__ == "__main__":
         for x in sorted(os.listdir(args.input_folder))
         if Path(x).suffix in supported_img_format
     ]
-
+    logging.info(f"Found {len(filelist)} images from {args.input_folder}:\n{pformat(filelist)}")
     images = [Image.open(x) for x in filelist]
 
     assert args.concat_direction in ["h", "v"], "unsupported concat direction!"
     if Path(args.out_path).suffix in supported_img_format:
-        concate_imgs(
-            resize_all(images), direction=args.concat_direction, file_path=args.out_path
-        )
+        logging.info(f"concat images to a full image on {args.concat_direction} direction")
+        concate_imgs(resize_all(images), direction=args.concat_direction, file_path=args.out_path)
     elif Path(args.out_path).suffix == ".pdf":
+        logging.info(f"concat images to pdf on {args.concat_direction} direction")
         concate_to_pdf(resize_all(images), file_path=args.out_path)
     else:
         raise ValueError(f"unsupported output format! {args.out_path}")
-    print(f"Done.\nSaved concated image to {args.out_path}")
+    logging.info(f"Done.\nSaved concated image to {args.out_path}")
