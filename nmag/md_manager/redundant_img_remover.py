@@ -65,7 +65,9 @@ class typora_img_red_remover:
         for f in self.all_src_imgs:
             for fmt in warn_fmt:
                 if fmt in f:
-                    logger.warn(f"Warnning format({fmt}) detected in img filelist after md remover: {f}")
+                    logger.warn(
+                        f"Warnning format({fmt}) detected in img filelist after md remover: {f}"
+                    )
 
     def ext_all_files(self, dir):
         ps = os.listdir(dir)
@@ -112,11 +114,15 @@ class typora_img_red_remover:
         因为可能有多个图片引用同一地址的情况，所以要做一下set处理
         """
         # txt = "test ![fdajk fda ](media/a/bfds.png) testse ![fdajfdsk](meddifds a/b/bfds.png) test"
-        logger.info(f"\nImg path extracting... check for hyper-link & abs path, remove method=={remove}")
+        logger.info(
+            f"\nImg path extracting... check for hyper-link & abs path, remove method=={remove}"
+        )
         global IMGPATTERNS
         patterns = IMGPATTERNS
         if remove:
-            logger.info(f"[Imgpath Extraction]Auto remove for AbsolutePath and HyperLink is opened")
+            logger.info(
+                "[Imgpath Extraction]Auto remove for AbsolutePath and HyperLink is opened"
+            )
         self.x = [re.compile(y) for y in patterns]
 
         self.all_used_imgs = []
@@ -149,7 +155,7 @@ class typora_img_red_remover:
                     osp.abspath(i)
                 )  # osp.abspath is necessary to convert '\' to '//' in windows system
                 logger.debug(f"{i} in dir")
-            except Exception as e:
+            except Exception:
                 logger.error(f"Img path ({i}) is not in the dir!")
         if len(self.red_paths) != 0:
             logger.info("\nAll redundant paths are:")
@@ -178,7 +184,9 @@ class typora_img_red_remover:
                     shutil.move(i, o)
                 except Exception as e:
                     logger.warn(e)
-            logger.info(f"All redundant files are moved to {tar} waiting for manual verification")
+            logger.info(
+                f"All redundant files are moved to {tar} waiting for manual verification"
+            )
 
     def run(self):
         self.img_src_extract()
@@ -214,6 +222,8 @@ if __name__ == "__main__":
     logger = get_logger(filename="remover.log", verb_level="info", method="w2file")
 
     tp = typora_img_red_remover(
-        input_folder=args.input_folder, output_folder=args.output_folder, ignore_formats=args.ignore_formats
+        input_folder=args.input_folder,
+        output_folder=args.output_folder,
+        ignore_formats=args.ignore_formats,
     )
     tp.run()

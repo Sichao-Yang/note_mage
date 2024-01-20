@@ -1,3 +1,4 @@
+#!/bin/bash
 indir=examples/redundant_img_remove
 outdir=examples/redundant_img_remove_new
 cd ..

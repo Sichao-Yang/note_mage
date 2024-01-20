@@ -1,4 +1,4 @@
-上篇主要介绍了经典的降维方法与度量学习，首先从“维数灾难”导致的样本稀疏以及距离难计算两大难题出发，引出了降维的概念，即通过某种数学变换将原始高维空间转变到一个低维的子空间，接着分别介绍了kNN、MDS、PCA、KPCA以及两种经典的流形学习方法，k近邻算法的核心在于k值的选取以及距离的度量，MDS要求原始空间样本之间的距离在降维后的低维空间中得以保持，主成分分析试图找到一个低维超平面来表出原空间样本点，核化主成分分析先将样本点映射到高维空间，再在高维空间中使用线性降维的方法，从而解决了原空间样本非线性分布的情形，基于流形学习的降维则是一种“邻域保持”的思想，最后度量学习试图去学习出一个距离度量来等效降维的效果。本篇将讨论另一种常用方法--特征选择与稀疏学习。
+上篇主要介绍了经典的降维方法与度量学习，首先从"维数灾难"导致的样本稀疏以及距离难计算两大难题出发，引出了降维的概念，即通过某种数学变换将原始高维空间转变到一个低维的子空间，接着分别介绍了kNN、MDS、PCA、KPCA以及两种经典的流形学习方法，k近邻算法的核心在于k值的选取以及距离的度量，MDS要求原始空间样本之间的距离在降维后的低维空间中得以保持，主成分分析试图找到一个低维超平面来表出原空间样本点，核化主成分分析先将样本点映射到高维空间，再在高维空间中使用线性降维的方法，从而解决了原空间样本非线性分布的情形，基于流形学习的降维则是一种"邻域保持"的思想，最后度量学习试图去学习出一个距离度量来等效降维的效果。本篇将讨论另一种常用方法--特征选择与稀疏学习。
 
 # **11. 特征选择与稀疏学习**
 
@@ -9,7 +9,7 @@
 * 数据挖掘/机器学习学科的研究者则习惯把它们叫做**样本**/**示例**（**example**/**instance**）和**属性**/**特征**（**attribute**/**feature**）。
 
 
-回归正题，在机器学习中特征选择是一个重要的“**数据预处理**”（**data** **preprocessing**）过程，即试图从数据集的所有特征中挑选出与当前学习任务相关的特征子集，接着再利用数据子集来训练学习器；稀疏学习则是围绕着稀疏矩阵的优良性质，来完成相应的学习任务。
+回归正题，在机器学习中特征选择是一个重要的"**数据预处理**"（**data** **preprocessing**）过程，即试图从数据集的所有特征中挑选出与当前学习任务相关的特征子集，接着再利用数据子集来训练学习器；稀疏学习则是围绕着稀疏矩阵的优良性质，来完成相应的学习任务。
 
 ## **11.1 子集搜索与评价**
 
@@ -31,7 +31,7 @@
 
 ## **11.2 过滤式选择（Relief）**
 
-过滤式方法是一种将特征选择与学习器训练相分离的特征选择技术，即首先将相关特征挑选出来，再使用选择出的数据子集来训练学习器。Relief是其中著名的代表性算法，它使用一个“**相关统计量**”来度量特征的重要性，该统计量是一个向量，其中每个分量代表着相应特征的重要性，因此我们最终可以根据这个统计量各个分量的大小来选择出合适的特征子集。
+过滤式方法是一种将特征选择与学习器训练相分离的特征选择技术，即首先将相关特征挑选出来，再使用选择出的数据子集来训练学习器。Relief是其中著名的代表性算法，它使用一个"**相关统计量**"来度量特征的重要性，该统计量是一个向量，其中每个分量代表着相应特征的重要性，因此我们最终可以根据这个统计量各个分量的大小来选择出合适的特征子集。
 
 易知Relief算法的核心在于如何计算出该相关统计量。对于数据集中的每个样例xi，Relief首先找出与xi同类别的最近邻与不同类别的最近邻，分别称为**猜中近邻（near-hit）**与**猜错近邻（near-miss）**，接着便可以分别计算出相关统计量中的每个分量。对于j分量：
 
@@ -104,7 +104,7 @@ $$
 \operatorname{Gain}(A)=\operatorname{Ent}(D)-\sum_{v=1}^{V} \frac{\left|D^{v}\right|}{|D|} \operatorname{Ent}\left(D^{v}\right)
 $$
 
-[解析]：此为信息增益的定义式，对数据集$D$和属性子集$A$，假设根据$A$的取值将$D$分为了$V$个子集$\{D^1,D^2,\dots,D^V\}$，那么信息增益的定义为划分之前数据集$D$的信息熵和划分之后每个子数据集$D^v$的信息熵的差。熵用来衡量一个系统的混乱程度，因此划分前和划分后熵的差越大，表示划分越有效，划分带来的”信息增益“越大。
+[解析]：此为信息增益的定义式，对数据集$D$和属性子集$A$，假设根据$A$的取值将$D$分为了$V$个子集$\{D^1,D^2,\dots,D^V\}$，那么信息增益的定义为划分之前数据集$D$的信息熵和划分之后每个子数据集$D^v$的信息熵的差。熵用来衡量一个系统的混乱程度，因此划分前和划分后熵的差越大，表示划分越有效，划分带来的"信息增益"越大。
 
 ### 11.2
 
@@ -299,7 +299,7 @@ $$
 
 5. 综上所述，11.14成立
 
-   
+
 
 ### 11.15
 
@@ -340,27 +340,27 @@ $$
 \begin{aligned}
 \boldsymbol B\boldsymbol A
 & =\begin{bmatrix}
-b_{1}^{1} &b_{2}^{1}  & \cdot  & \cdot  & \cdot  & b_{k}^{1}\\ 
-b_{1}^{2} &b_{2}^{2}  & \cdot  & \cdot  & \cdot  & b_{k}^{2}\\ 
-\cdot  & \cdot  & \cdot  &  &  & \cdot \\ 
-\cdot  &  \cdot &  & \cdot  &  &\cdot  \\ 
- \cdot & \cdot  &  &  & \cdot  & \cdot \\ 
+b_{1}^{1} &b_{2}^{1}  & \cdot  & \cdot  & \cdot  & b_{k}^{1}\\
+b_{1}^{2} &b_{2}^{2}  & \cdot  & \cdot  & \cdot  & b_{k}^{2}\\
+\cdot  & \cdot  & \cdot  &  &  & \cdot \\
+\cdot  &  \cdot &  & \cdot  &  &\cdot  \\
+ \cdot & \cdot  &  &  & \cdot  & \cdot \\
  b_{1}^{d}& b_{2}^{d}  & \cdot  & \cdot  &\cdot   &  b_{k}^{d}
-\end{bmatrix}_{d\times k}\cdot 
+\end{bmatrix}_{d\times k}\cdot
 \begin{bmatrix}
-\alpha_{1}^{1} &\alpha_{2}^{1}  & \cdot  & \cdot  & \cdot  & \alpha_{m}^{1}\\ 
-\alpha_{1}^{2} &\alpha_{2}^{2}  & \cdot  & \cdot  & \cdot  & \alpha_{m}^{2}\\ 
-\cdot  & \cdot  & \cdot  &  &  & \cdot \\ 
-\cdot  &  \cdot &  & \cdot  &  &\cdot  \\ 
- \cdot & \cdot  &  &  & \cdot  & \cdot \\ 
+\alpha_{1}^{1} &\alpha_{2}^{1}  & \cdot  & \cdot  & \cdot  & \alpha_{m}^{1}\\
+\alpha_{1}^{2} &\alpha_{2}^{2}  & \cdot  & \cdot  & \cdot  & \alpha_{m}^{2}\\
+\cdot  & \cdot  & \cdot  &  &  & \cdot \\
+\cdot  &  \cdot &  & \cdot  &  &\cdot  \\
+ \cdot & \cdot  &  &  & \cdot  & \cdot \\
  \alpha_{1}^{k}& \alpha_{2}^{k}  & \cdot  & \cdot  &\cdot   &  \alpha_{m}^{k}
 \end{bmatrix}_{k\times m} \\
 & =\begin{bmatrix}
-\sum_{j=1}^{k}b_{j}^{1}\alpha _{1}^{j} &\sum_{j=1}^{k}b_{j}^{1}\alpha _{2}^{j} & \cdot  & \cdot  & \cdot  & \sum_{j=1}^{k}b_{j}^{1}\alpha _{m}^{j}\\ 
-\sum_{j=1}^{k}b_{j}^{2}\alpha _{1}^{j} &\sum_{j=1}^{k}b_{j}^{2}\alpha _{2}^{j}  & \cdot  & \cdot  & \cdot  & \sum_{j=1}^{k}b_{j}^{2}\alpha _{m}^{j}\\ 
-\cdot  & \cdot  & \cdot  &  &  & \cdot \\ 
-\cdot  &  \cdot &  & \cdot  &  &\cdot  \\ 
- \cdot & \cdot  &  &  & \cdot  & \cdot \\ 
+\sum_{j=1}^{k}b_{j}^{1}\alpha _{1}^{j} &\sum_{j=1}^{k}b_{j}^{1}\alpha _{2}^{j} & \cdot  & \cdot  & \cdot  & \sum_{j=1}^{k}b_{j}^{1}\alpha _{m}^{j}\\
+\sum_{j=1}^{k}b_{j}^{2}\alpha _{1}^{j} &\sum_{j=1}^{k}b_{j}^{2}\alpha _{2}^{j}  & \cdot  & \cdot  & \cdot  & \sum_{j=1}^{k}b_{j}^{2}\alpha _{m}^{j}\\
+\cdot  & \cdot  & \cdot  &  &  & \cdot \\
+\cdot  &  \cdot &  & \cdot  &  &\cdot  \\
+ \cdot & \cdot  &  &  & \cdot  & \cdot \\
 \sum_{j=1}^{k}b_{j}^{d}\alpha _{1}^{j}& \sum_{j=1}^{k}b_{j}^{d}\alpha _{2}^{j}  & \cdot  & \cdot  &\cdot   &  \sum_{j=1}^{k}b_{j}^{d}\alpha _{m}^{j}
 \end{bmatrix}_{d\times m} &
 \end{aligned}
@@ -371,20 +371,20 @@ $$
 \boldsymbol b_{\boldsymbol j}\boldsymbol \alpha ^{\boldsymbol j}
 & =\begin{bmatrix}
 b_{j}^{1}\\ b_{j}^{2}
-\\ \cdot 
-\\ \cdot 
-\\ \cdot 
+\\ \cdot
+\\ \cdot
+\\ \cdot
 \\ b_{j}^{d}
-\end{bmatrix}\cdot 
+\end{bmatrix}\cdot
 \begin{bmatrix}
  \alpha _{1}^{j}& \alpha _{2}^{j} & \cdot  & \cdot  & \cdot  & \alpha _{m}^{j}
 \end{bmatrix}\\
 & =\begin{bmatrix}
-b_{j}^{1}\alpha _{1}^{j} &b_{j}^{1}\alpha _{2}^{j} & \cdot  & \cdot  & \cdot  & b_{j}^{1}\alpha _{m}^{j}\\ 
-b_{j}^{2}\alpha _{1}^{j} &b_{j}^{2}\alpha _{2}^{j}  & \cdot  & \cdot  & \cdot  & b_{j}^{2}\alpha _{m}^{j}\\ 
-\cdot  & \cdot  & \cdot  &  &  & \cdot \\ 
-\cdot  &  \cdot &  & \cdot  &  &\cdot  \\ 
- \cdot & \cdot  &  &  & \cdot  & \cdot \\ 
+b_{j}^{1}\alpha _{1}^{j} &b_{j}^{1}\alpha _{2}^{j} & \cdot  & \cdot  & \cdot  & b_{j}^{1}\alpha _{m}^{j}\\
+b_{j}^{2}\alpha _{1}^{j} &b_{j}^{2}\alpha _{2}^{j}  & \cdot  & \cdot  & \cdot  & b_{j}^{2}\alpha _{m}^{j}\\
+\cdot  & \cdot  & \cdot  &  &  & \cdot \\
+\cdot  &  \cdot &  & \cdot  &  &\cdot  \\
+ \cdot & \cdot  &  &  & \cdot  & \cdot \\
 b_{j}^{d}\alpha _{1}^{j}& b_{j}^{d}\alpha _{2}^{j}  & \cdot  & \cdot  &\cdot   &  b_{j}^{d}\alpha _{m}^{j}
 \end{bmatrix}_{d\times m} &
 \end{aligned}
@@ -393,23 +393,23 @@ $$
 求和可得：
 $$
 \begin{aligned}
-\sum_{j=1}^{k}\boldsymbol b_{\boldsymbol j}\boldsymbol \alpha ^{\boldsymbol j} 
+\sum_{j=1}^{k}\boldsymbol b_{\boldsymbol j}\boldsymbol \alpha ^{\boldsymbol j}
 & = \sum_{j=1}^{k}\left (\begin{bmatrix}
 b_{1}^{j}\\ b_{w}^{j}
-\\ \cdot 
-\\ \cdot 
-\\ \cdot 
+\\ \cdot
+\\ \cdot
+\\ \cdot
 \\ b_{d}^{j}
-\end{bmatrix}\cdot 
+\end{bmatrix}\cdot
 \begin{bmatrix}
  \alpha _{1}^{j}& \alpha _{2}^{j} & \cdot  & \cdot  & \cdot  & \alpha _{m}^{j}
 \end{bmatrix} \right )\\
 & =\begin{bmatrix}
-\sum_{j=1}^{k}b_{j}^{1}\alpha _{1}^{j} &\sum_{j=1}^{k}b_{j}^{1}\alpha _{2}^{j} & \cdot  & \cdot  & \cdot  & \sum_{j=1}^{k}b_{j}^{1}\alpha _{m}^{j}\\ 
-\sum_{j=1}^{k}b_{j}^{2}\alpha _{1}^{j} &\sum_{j=1}^{k}b_{j}^{2}\alpha _{2}^{j}  & \cdot  & \cdot  & \cdot  & \sum_{j=1}^{k}b_{j}^{2}\alpha _{m}^{j}\\ 
-\cdot  & \cdot  & \cdot  &  &  & \cdot \\ 
-\cdot  &  \cdot &  & \cdot  &  &\cdot  \\ 
- \cdot & \cdot  &  &  & \cdot  & \cdot \\ 
+\sum_{j=1}^{k}b_{j}^{1}\alpha _{1}^{j} &\sum_{j=1}^{k}b_{j}^{1}\alpha _{2}^{j} & \cdot  & \cdot  & \cdot  & \sum_{j=1}^{k}b_{j}^{1}\alpha _{m}^{j}\\
+\sum_{j=1}^{k}b_{j}^{2}\alpha _{1}^{j} &\sum_{j=1}^{k}b_{j}^{2}\alpha _{2}^{j}  & \cdot  & \cdot  & \cdot  & \sum_{j=1}^{k}b_{j}^{2}\alpha _{m}^{j}\\
+\cdot  & \cdot  & \cdot  &  &  & \cdot \\
+\cdot  &  \cdot &  & \cdot  &  &\cdot  \\
+ \cdot & \cdot  &  &  & \cdot  & \cdot \\
 \sum_{j=1}^{k}b_{j}^{d}\alpha _{1}^{j}& \sum_{j=1}^{k}b_{j}^{d}\alpha _{2}^{j}  & \cdot  & \cdot  &\cdot   &  \sum_{j=1}^{k}b_{j}^{d}\alpha _{m}^{j}
 \end{bmatrix}_{d\times m} &
 \end{aligned}
@@ -417,6 +417,3 @@ $$
 得证。
 
 将矩阵$\mathbf{B}$分解成矩阵列$\boldsymbol{b}_j,j=1,2,\dots,k$带来一个好处，即和11.16的原理相同，矩阵列与列之间无关，因此可以分别优化各个列，即将$\min_\mathbf{B}\Vert\dots\mathbf{B}\dots\Vert^2_F$转化成了$\min_{b_i}\Vert\cdots\boldsymbol{b}_i\cdots\Vert^2_F$，得到第三行的等式之后，再利用文中介绍的KSVD算法求解即可。
-
-
-

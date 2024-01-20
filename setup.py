@@ -1,9 +1,5 @@
-import sys
 from setuptools import setup, find_packages
 from os import path as osp
-
-if sys.version_info < (3, 6):
-    sys.exit("Sorry, Python < 3.6 is not supported")
 
 BASE_DIR = osp.abspath(osp.dirname(__file__))
 
@@ -28,7 +24,7 @@ setup(
     package_data={
         "examples": ["*.sh", "*.pdf", "*.md", "*.png", "*.txt"],
     },
-    python_requires='>=3.6',
+    python_requires=">=3.6",
     install_requires=packages,
     entry_points={
         # 'console_scripts': ['mycli=mymodule:cli'],

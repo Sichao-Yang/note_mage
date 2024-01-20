@@ -53,7 +53,7 @@ where $\mathbf{W}$ is a $p$-by- $p$ matrix of weights whose columns are the eige
 
 Multidimensional scaling (MDS) is a means of visualizing the level of similarity of individual cases of a dataset. MDS is used to translate "information about the pairwise 'distances' among a set of $n$ objects or individuals" into a configuration of $n$ points mapped into an abstract Cartesian space.
 
-它就是把存在高维空间里的点都压缩到低维空间的同时保留点和点之间的 ‘距离’，这里的距离在经典MDS里是欧式的，后来被拓展到非欧式的。
+它就是把存在高维空间里的点都压缩到低维空间的同时保留点和点之间的 '距离'，这里的距离在经典MDS里是欧式的，后来被拓展到非欧式的。
 
 > Steps of a Classical MDS algorithm
 >
@@ -83,27 +83,27 @@ $$
 
 因为将在 $Z$ 维空间中空间中，点可以进行平移与旋转，因此在Z维空间中会有多种分布满足要 求，不失一般性，我们假设 $Z$ 维空间中的实例点是中心化的，即:
 $$
-\sum_{i=1}^{N} z_{i}=0		\tag{1}
+\sum_{i=1}^{N} z_{i}=0      \tag{1}
 $$
 我们对公式 (1) 左右两边求和:
 $$
-\sum_{i=1}^{N} d_{i j}^{2}=\sum_{i=1}^{N}\left\|z_{i}\right\|^{2}+N\left\|z_{i}\right\|^{2} \tag{2} 
+\sum_{i=1}^{N} d_{i j}^{2}=\sum_{i=1}^{N}\left\|z_{i}\right\|^{2}+N\left\|z_{i}\right\|^{2} \tag{2}
 $$
 
 $$
-\sum_{j=1}^{N} d_{i j}^{2}=\sum_{j=1}^{N}\left\|z_{j}\right\|^{2}+N\left\|z_{j}\right\|^{2}	\tag{3}
+\sum_{j=1}^{N} d_{i j}^{2}=\sum_{j=1}^{N}\left\|z_{j}\right\|^{2}+N\left\|z_{j}\right\|^{2} \tag{3}
 $$
  对公式(3)两边再次进行求和:
 $$
-\sum_{i=1}^{N} \sum_{j=1}^{N} d_{i j}^{2}=\sum_{i=1}^{N} \sum_{j=1}^{N}\left\|z_{j}\right\|^{2}+N \sum_{i=1}^{N}\left\|z_{i}\right\|^{2}=2 N \sum_{i=1}^{N}\left\|z_{i}\right\|^{2} 	\tag{4}
+\sum_{i=1}^{N} \sum_{j=1}^{N} d_{i j}^{2}=\sum_{i=1}^{N} \sum_{j=1}^{N}\left\|z_{j}\right\|^{2}+N \sum_{i=1}^{N}\left\|z_{i}\right\|^{2}=2 N \sum_{i=1}^{N}\left\|z_{i}\right\|^{2}     \tag{4}
 $$
 定义内积矩阵 $B=Z^{T} Z$ ，其中。将式(2)(3)(4)代入式(1)中，可得:
 $$
-b_{i j}=-\frac{1}{2}\left(\frac{1}{N^{2}} \sum_{i=1}^{N} \sum_{j=1}^{N} d_{i j}^{2}-\frac{1}{N} \sum_{i=1}^{N} d_{i j}^{2}-\frac{1}{N} \sum_{j=1}^{N} d_{i j}^{2}+d_{i j}^{2}\right) 	\tag{5}
+b_{i j}=-\frac{1}{2}\left(\frac{1}{N^{2}} \sum_{i=1}^{N} \sum_{j=1}^{N} d_{i j}^{2}-\frac{1}{N} \sum_{i=1}^{N} d_{i j}^{2}-\frac{1}{N} \sum_{j=1}^{N} d_{i j}^{2}+d_{i j}^{2}\right)    \tag{5}
 $$
 由于矩阵 $B$ 是一个是对称矩阵，因此对矩阵 $B$ 进行特征分解可以得到:
 $$
-B=V A V^{T} 
+B=V A V^{T}
 $$
 其中， $\Lambda$ 是的特征值矩阵， $E$ 是特征向量矩阵。由于我们将数据降维到 $Z$ 维空间中，因此我 们选择前 $z$ 个最大的特征值以及特征向量。降维之后的数据点表示为
 $$
@@ -119,11 +119,11 @@ $$
 
 #### 2 t-SNE
 
-> **t-distributed stochastic neighbor embedding** (**t-SNE**) is a [statistical](https://en.wikipedia.org/wiki/Statistical) method for visualizing high-dimensional data by giving each datapoint a location in a two or three-dimensional map. 
+> **t-distributed stochastic neighbor embedding** (**t-SNE**) is a [statistical](https://en.wikipedia.org/wiki/Statistical) method for visualizing high-dimensional data by giving each datapoint a location in a two or three-dimensional map.
 
 t-SNE 也是一种典型的降维方法，目的在于data visualization。read [Wiki page, Details part](https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding)：
 
-降维的统一思想是在低维空间里保留高维空间点和点之间的“距离”，在t-SNE里用的距离是（高斯）概率。
+降维的统一思想是在低维空间里保留高维空间点和点之间的"距离"，在t-SNE里用的距离是（高斯）概率。
 
 原始**高维空间** - 首先我们定义以i点为中心，对应 j 数据点的条件概率计算公式为：
 $$
@@ -159,7 +159,7 @@ $$
 
 [wiki](https://en.wikipedia.org/wiki/Isomap )   [知乎](https://zhuanlan.zhihu.com/p/60599491)
 
-The algorithm provides a simple method for estimating the intrinsic geometry of a data [manifold](https://en.wikipedia.org/wiki/Manifold) based on a rough estimate of each data point’s neighbors on the manifold. Isomap 是MDS的一个自然延伸，它的方法里，样本点间的相似度/度量方式不再是欧式的，而是在流形上的距离。流形的构造方式是nearest-neighbour。
+The algorithm provides a simple method for estimating the intrinsic geometry of a data [manifold](https://en.wikipedia.org/wiki/Manifold) based on a rough estimate of each data point's neighbors on the manifold. Isomap 是MDS的一个自然延伸，它的方法里，样本点间的相似度/度量方式不再是欧式的，而是在流形上的距离。流形的构造方式是nearest-neighbour。
 
 所以它和下面的UMAP都是两步走：第一步通过最近邻算法来构造近似流形图，然后再把点压缩映射到流形上。只不过UMAP里做了uniform distribution的假设。
 
@@ -218,7 +218,7 @@ We will, however, break this down into even smaller components to make our under
 It will come as no surprise, but before we can map our data to lower dimensions, we first need to figure out what it looks like in the higher-dimensional space.
 
 **1.1. Finding nearest neighbors**
-UMAP starts by finding the nearest neighbors using the [Nearest-Neighbor-Descent algorithm of Dong et al](http://www.cs.princeton.edu/cass/papers/www11.pdf). You will see in the Python section later on that we can specify how many nearest neighbors we want to use by adjusting UMAP’s ***n_neighbors\*** hyperparameter.
+UMAP starts by finding the nearest neighbors using the [Nearest-Neighbor-Descent algorithm of Dong et al](http://www.cs.princeton.edu/cass/papers/www11.pdf). You will see in the Python section later on that we can specify how many nearest neighbors we want to use by adjusting UMAP's ***n_neighbors\*** hyperparameter.
 
 It is important to experiment with the number of ***n_neighbors\*** because it **controls how UMAP balances local versus global structure in the data**. It does it by constraining the size of the local neighborhood when attempting to learn the manifold structure.
 
@@ -228,7 +228,7 @@ Essentially, a small value for ***n_neighbors\*** means that we want a very loca
 Next, UMAP needs to construct a graph by connecting the previously identified nearest neighbors. To understand this process, we need to look at a few sub-components that explain how the neighborhood graph comes to be.
 
 **1.2.1. Varying distance**
-As outlined in the analysis of the UMAP’s name, we assume a uniform distribution of points across the manifold, suggesting that space between them is stretching or shrinking according to where the data appears to be sparser or denser.
+As outlined in the analysis of the UMAP's name, we assume a uniform distribution of points across the manifold, suggesting that space between them is stretching or shrinking according to where the data appears to be sparser or denser.
 
 It essentially means that the distance metric is not universal across the whole space, and instead, it varies between different regions. We can visualize it by drawing circles/spheres around each data point, which appear to be different in size because of the varying distance metric (see illustration below).
 
@@ -287,7 +287,7 @@ Essentially, we can control the minimum spread of points, avoiding scenarios wit
 
 As you can see, the ultimate goal is to **find the optimal weights of edges in the low-dimensional representation**. These optimal weights emerge as the above Cross-Entropy cost function is minimized following an iterative stochastic gradient descent process.
 
-And that is it! The UMAP’s job is now complete, and we are given an array containing the coordinates of each data point in a specified lower-dimensional space.
+And that is it! The UMAP's job is now complete, and we are given an array containing the coordinates of each data point in a specified lower-dimensional space.
 
 #### 5 Laplacian Eigenmaps
 
@@ -301,7 +301,7 @@ d_{i i}=\sum_{j} w_{i j}
 $$
 然后拉普拉斯矩阵就是 L = D - W。它的一个有用的公式为：
 $$
-f^{t} L f=\frac{1}{2}\left(\sum_{i} f_{i}^{2} D i i+\sum_{i} f_{j}^{2} D j j-2 \sum_{i j} f_{i} f_{j} w_{i j}\right)=\frac{1}{2}\left(\sum_{i j}\left(f_{i}^{2}+f_{j}^{2}-2 f_{i} f_{j}\right) w_{i j}\right)=\frac{1}{2} \sum_{i j}\left(f_{i}-f_{j}\right) w_{i j}	\tag 1
+f^{t} L f=\frac{1}{2}\left(\sum_{i} f_{i}^{2} D i i+\sum_{i} f_{j}^{2} D j j-2 \sum_{i j} f_{i} f_{j} w_{i j}\right)=\frac{1}{2}\left(\sum_{i j}\left(f_{i}^{2}+f_{j}^{2}-2 f_{i} f_{j}\right) w_{i j}\right)=\frac{1}{2} \sum_{i j}\left(f_{i}-f_{j}\right) w_{i j}    \tag 1
 $$
 
 ##### LE算法
@@ -365,7 +365,7 @@ LE的算法流程如下:
 
 对于这三个问题，在作者的[原论文](https://www2.imm.dtu.dk/projects/manifold/Papers/Laplacian.pdf)里都有很好的描述。总结如下：
 
-1. ojb func.的设计保证如果k近邻的Y选的不够近，loss就会很高：The objective function with our choice of weights $W_{i j}$ incurs a heavy penalty if neighboring points $\mathbf{x}_{i}$ and $\mathbf{x}_{j}$ are mapped far apart. Therefore, minimizing it is an attempt to ensure that if $\mathbf{x}_{i}$ and $\mathbf{x}_{j}$ are "close," then $y_{i}$ and $y_{j}$ are close as well. 
+1. ojb func.的设计保证如果k近邻的Y选的不够近，loss就会很高：The objective function with our choice of weights $W_{i j}$ incurs a heavy penalty if neighboring points $\mathbf{x}_{i}$ and $\mathbf{x}_{j}$ are mapped far apart. Therefore, minimizing it is an attempt to ensure that if $\mathbf{x}_{i}$ and $\mathbf{x}_{j}$ are "close," then $y_{i}$ and $y_{j}$ are close as well.
 
 2. 首先，论文的算法是从1维的y引入的y=(y0,y1,y2...)，这段话的意思直觉上来看就是首先通过这个约束我们可以把所有y的scaling的问题解决（否则要minimize问题我们只需要让所有y都映射到无限接近0不就好了嘛），其次y越重要它加权的权重越大，那我们就越可能把它放在低纬空间里比较靠近中心的位置。 The constraint $\mathbf{y}^{T} D \mathbf{y}=1$ removes an arbitrary scaling factor in the embedding. Matrix $D$ provides a natural measure on the vertices of the graph. The bigger the value $D_{i i}$ (corresponding to the $i$ th vertex) is, the more "important" is that vertex.
 
@@ -376,7 +376,7 @@ LE的算法流程如下:
    \mathbf{y}^{T} D \mathbf{1}=0
    $$
 
-	Thus, the solution is now given by the eigenvector with the smallest nonzero eigenvalue. The condition $\mathbf{y}^{T} D \mathbf{1}=0$ can be interpreted as removing a translation invariance in $\mathbf{y}$. 或者说我们不允许y和 $\mathbf{1}$ 之间有covariance。
+    Thus, the solution is now given by the eigenvector with the smallest nonzero eigenvalue. The condition $\mathbf{y}^{T} D \mathbf{1}=0$ can be interpreted as removing a translation invariance in $\mathbf{y}$. 或者说我们不允许y和 $\mathbf{1}$ 之间有covariance。
 
 #### 6 LLE
 
@@ -389,7 +389,7 @@ s.t. \sum_{j} w_{i j}=W_{i}^{T} 1_{k}=1 \tag1
 $$
 接着把高维空间的X压缩到低维空间Y里去，通过minimize下式来获得Y：
 $$
-\Phi(Y)=\sum_{i}\left|\vec{Y}_{i}-\sum_{j} W_{i j} \vec{Y}_{j}\right|^{2}		\tag2
+\Phi(Y)=\sum_{i}\left|\vec{Y}_{i}-\sum_{j} W_{i j} \vec{Y}_{j}\right|^{2}       \tag2
 $$
 
 ##### 求解
@@ -461,13 +461,13 @@ $$
 2. 对比各种算法：
 
    https://towardsdatascience.com/reduce-dimensions-for-single-cell-4224778a2d67：In this post, we have learnt that single cell genomics data have a **non-linear structure** which comes from the large proportion of **stochastic zeros** in the expression matrix due to the drop out effect. The **linear manifold learning** techniques preserve the **global structure** of the data and are not capable of fully resolving all cell populations present. In contrast, **preserving the** **local connectivity between the data points (LLE, tSNE, UMAP)** is the key factor for a successful dimensionality reduction of single cell genomics data.
-   
+
    ![img](media/DimensionReduction/1U8RzOMplt76sbBJDCl8pBw.png)
-   
+
    ![img](media/DimensionReduction/1Nf4tlA91a3TOcsvB3RAYTw.png)
-   
-   
-   
+
+
+
    ![Overview and comparative study of dimensionality reduction techniques for  high dimensional data - ScienceDirect](media/DimensionReduction/1-s2.0-S156625351930377X-gr1.jpg)
 
 3. 非线性降维，通常最佳应用场景还是在可视化，对比非线性降维后再接线性分类或回归不如直接接一个非线性的分类/回归器。特别是t-SNE，算法复杂度比较高：https://www.zhihu.com/question/52022955/answer/387753267

@@ -4,11 +4,11 @@
 
 现在再来谈谈机器学习的核心价值观，可以更通俗地理解为：**根据一些已观察到的证据来推断未知**，更具哲学性地可以阐述为：未来的发展总是遵循着历史的规律。其中**基于概率的模型将学习任务归结为计算变量的概率分布**，正如之前已经提到的：生成式模型先对联合分布进行建模，从而再来求解后验概率，例如：贝叶斯分类器先对联合分布进行最大似然估计，从而便可以计算类条件概率；判别式模型则是直接对条件分布进行建模。
 
-**概率图模型**（probabilistic graphical model）是一类用**图结构**来表达各属性之间相关关系的概率模型，一般而言：**图中的一个结点表示一个或一组随机变量，结点之间的边则表示变量间的相关关系**，从而形成了一张“**变量关系图**”。若使用有向的边来表达变量之间的依赖关系，这样的有向关系图称为**贝叶斯网**（Bayesian nerwork）或有向图模型；若使用无向边，则称为**马尔可夫网**（Markov network）或无向图模型。
+**概率图模型**（probabilistic graphical model）是一类用**图结构**来表达各属性之间相关关系的概率模型，一般而言：**图中的一个结点表示一个或一组随机变量，结点之间的边则表示变量间的相关关系**，从而形成了一张"**变量关系图**"。若使用有向的边来表达变量之间的依赖关系，这样的有向关系图称为**贝叶斯网**（Bayesian nerwork）或有向图模型；若使用无向边，则称为**马尔可夫网**（Markov network）或无向图模型。
 
 ## **14.1 隐马尔可夫模型(HMM)**
 
-隐马尔可夫模型（Hidden Markov Model，简称HMM）是结构最简单的一种贝叶斯网，在语音识别与自然语言处理领域上有着广泛的应用。HMM中的变量分为两组：**状态变量**与**观测变量**，其中状态变量一般是未知的，因此又称为“**隐变量**”，观测变量则是已知的输出值。在隐马尔可夫模型中，变量之间的依赖关系遵循如下两个规则：
+隐马尔可夫模型（Hidden Markov Model，简称HMM）是结构最简单的一种贝叶斯网，在语音识别与自然语言处理领域上有着广泛的应用。HMM中的变量分为两组：**状态变量**与**观测变量**，其中状态变量一般是未知的，因此又称为"**隐变量**"，观测变量则是已知的输出值。在隐马尔可夫模型中，变量之间的依赖关系遵循如下两个规则：
 
 > **1. 观测变量的取值仅依赖于状态变量**；
 > **2. 下一个状态的取值仅依赖于当前状态**，通俗来讲：**现在决定未来，未来与过去无关**，这就是著名的**马尔可夫性**。
@@ -350,7 +350,7 @@ $$
 $$
 \begin{aligned}
 \pi T(j) = \sum _i \pi (i)T(i,j) = \sum _i \pi (j)T(j,i) = \pi(j)
-\end{aligned} 
+\end{aligned}
 $$
 假设采样得到的序列为$x_1,x_2,..,x_{t-1},x_t$，则可以使用$MH$算法来使得$x_{t-1}$(假设为状态$s_i$)转移到$x_t$(假设为状态$s_j$)的概率满足式。
 
@@ -371,20 +371,20 @@ $$
 \begin{aligned}
   A(x^* | x^{t-1}) &= p(x^*)Q(x^{t-1} | x^*)  \\
   A(x^{t-1} | x^*) &= p(x^{t-1})Q(x^* | x^{t-1})
- \end{aligned} 
+ \end{aligned}
 $$
 即可满足式$14.26$，但是实际上等号右边的数值可能比较小，比如各为0.1和0.2，那么好不容易才到的样本只有百分之十几得到利用，所以不妨将接受率设为0.5和1，则细致平稳分布条件依然满足，样本利用率大大提高, 所以可以改进为
 $$
-\begin{aligned} 
-A(x^* | x^{t-1}) &=  \frac{p(x^*)Q(x^{t-1} | x^*)}{norm}  \\  
+\begin{aligned}
+A(x^* | x^{t-1}) &=  \frac{p(x^*)Q(x^{t-1} | x^*)}{norm}  \\
 A(x^{t-1} | x^*) &= \frac{p(x^{t-1})Q(x^* | x^{t-1}) }{norm}
-\end{aligned} 
+\end{aligned}
 $$
 其中
 $$
-\begin{aligned} 
+\begin{aligned}
 norm = \max\left (p(x^{t-1})Q(x^* | x^{t-1}),p(x^*)Q(x^{t-1} | x^*) \right )
-\end{aligned}  
+\end{aligned}
 $$
 即西瓜书中的$14.28$。
 
@@ -417,7 +417,7 @@ $$
 
 ### 14.32
 
-$${\rm ln}p(x)=\mathcal{L}(q)+{\rm KL}(q \parallel p)$$ 
+$${\rm ln}p(x)=\mathcal{L}(q)+{\rm KL}(q \parallel p)$$
 
 [推导]：根据条件概率公式$p(x,z)=p(z|x)*p(x)$，可以得到$p(x)=\frac{p(x,z)}{p(z|x)}$
 
@@ -481,7 +481,7 @@ $$
 $$
 \begin{aligned}
 \int\prod_{i}q_{i}{\rm ln}p({\rm \mathbf{x},\mathbf{z}})d{\rm\mathbf{z}} &= \int q_{j}\prod_{i\ne j}q_{i}{\rm ln}p({\rm \mathbf{x},\mathbf{z}})d{\rm\mathbf{z}} \\
-&= \int q_{j}\bigg\{\int{\rm ln}p({\rm \mathbf{x},\mathbf{z}})\prod_{i\ne j}q_{i}d{\rm\mathbf{z_{i}}}\bigg\}d{\rm\mathbf{z_{j}}}\qquad 
+&= \int q_{j}\bigg\{\int{\rm ln}p({\rm \mathbf{x},\mathbf{z}})\prod_{i\ne j}q_{i}d{\rm\mathbf{z_{i}}}\bigg\}d{\rm\mathbf{z_{j}}}\qquad
 \end{aligned}
 $$
 即先对$\rm\mathbf{z_{j}}$求积分，再对$\rm\mathbf{z_{i}}$求积分，这个就是教材中的$14.36$左边的积分部分。
@@ -498,7 +498,7 @@ $\bigg\{\int\prod_{i\ne i^{\prime}}q_{i}{\rm ln}q_{k}d{\rm\mathbf{z_{i}}}\bigg\}
 $$
 \begin{aligned}
 \int\prod_{i}q_{i}{\rm ln}q_{k}d{\rm\mathbf{z}}&=\int\prod_{i\ne i^{\prime}}q_{i}{\rm ln}q_{k}d{\rm\mathbf{z_{i}}} \\
-&= \int q_{k}{\rm ln}q_{k}d{\rm\mathbf{z_k}}\qquad 
+&= \int q_{k}{\rm ln}q_{k}d{\rm\mathbf{z_k}}\qquad
 \end{aligned}
 $$
 即所有$k$以外的变量都可以通过上面的方式消除,有了这个结论，我们再来看公式
@@ -541,14 +541,14 @@ $$
 ### 14.40
 
 $$
-\begin{aligned} 
+\begin{aligned}
 q_j^*(\mathbf{z}_j) = \frac{ \exp\left ( \mathbb{E}_{i\neq j}[\ln (p(\mathbf{x},\mathbf{z}))] \right ) }{\int \exp\left ( \mathbb{E}_{i\neq j}[\ln (p(\mathbf{x},\mathbf{z}))] \right ) \mathrm{d}\mathbf{z}_j}
 \end{aligned}
 $$
 
 [推导]：由$14.39$去对数并积分
 $$
-\begin{aligned} 
+\begin{aligned}
  \int q_j^*(\mathbf{z}_j)\mathrm{d}\mathbf{z}_j &=\int \exp\left ( \mathbb{E}_{i\neq j}[\ln (p(\mathbf{x},\mathbf{z}))] \right )\cdot\exp(const) \, \mathrm{d}\mathbf{z}_j \\
  &=\exp(const) \int \exp\left ( \mathbb{E}_{i\neq j}[\ln (p(\mathbf{x},\mathbf{z}))] \right ) \, \mathrm{d}\mathbf{z}_j \\
  &= 1
@@ -560,7 +560,7 @@ $$
 $$
 
 $$
-\begin{aligned} 
+\begin{aligned}
   q_j^*(\mathbf{z}_j) &= \exp\left ( \mathbb{E}_{i\neq j}[\ln (p(\mathbf{x},\mathbf{z}))] \right )\cdot\exp(const)  \\
  &= \frac{ \exp\left ( \mathbb{E}_{i\neq j}[\ln (p(\mathbf{x},\mathbf{z}))] \right ) }{\int \exp\left ( \mathbb{E}_{i\neq j}[\ln (p(\mathbf{x},\mathbf{z}))] \right ) \mathrm{d}\mathbf{z}_j}
  \end{aligned}
@@ -571,7 +571,7 @@ $$
 $$
 p(\boldsymbol W,\boldsymbol z,\boldsymbol \beta,\boldsymbol \theta | \boldsymbol \alpha,\boldsymbol \eta) =
 \prod_{t=1}^{T}p(\boldsymbol \theta_t | \boldsymbol \alpha)
-\prod_{k=1}^{K}p(\boldsymbol \beta_k | \boldsymbol \eta) 
+\prod_{k=1}^{K}p(\boldsymbol \beta_k | \boldsymbol \eta)
 (\prod_{n=1}^{N}P(w_{t,n} | z_{t,n}, \boldsymbol \beta_k)P( z_{t,n} | \boldsymbol \theta_t))
 $$
 

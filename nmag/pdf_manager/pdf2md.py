@@ -27,7 +27,7 @@ def main(input_folder, output_folder):
             filepath = osp.join(odir, "{:02d}.jpg".format(i))
             images[i].save(filepath, "JPEG")
         # generate markdown files with references to sorted images
-        logging.info(f"generating markdown from images")
+        logging.info("generating markdown from images")
         imgs = sorted(os.listdir(odir))
         with open(osp.join(output_folder, title + ".md"), "w") as fp:
             fp.write(f"# {title}\n\n")

@@ -2,7 +2,7 @@
 
 # 3 线性模型
 
-谈及线性模型，其实我们很早就已经与它打过交道，还记得高中数学必修3课本中那个顽皮的“最小二乘法”吗？这就是线性模型的经典算法之一：根据给定的（x，y）点对，求出一条与这些点拟合效果最好的直线y=ax+b，之前我们利用下面的公式便可以计算出拟合直线的系数a,b（3.1中给出了具体的计算过程），从而对于一个新的x，可以预测它所对应的y值。前面我们提到：在机器学习的术语中，当预测值为连续值时，称为“回归问题”，离散值时为“分类问题”。本篇先从线性回归任务开始，接着讨论分类和多分类问题。
+谈及线性模型，其实我们很早就已经与它打过交道，还记得高中数学必修3课本中那个顽皮的"最小二乘法"吗？这就是线性模型的经典算法之一：根据给定的（x，y）点对，求出一条与这些点拟合效果最好的直线y=ax+b，之前我们利用下面的公式便可以计算出拟合直线的系数a,b（3.1中给出了具体的计算过程），从而对于一个新的x，可以预测它所对应的y值。前面我们提到：在机器学习的术语中，当预测值为连续值时，称为"回归问题"，离散值时为"分类问题"。本篇先从线性回归任务开始，接着讨论分类和多分类问题。
 
 ![1.png](5bc722b068e48.png)
 
@@ -12,13 +12,13 @@
 
 有时这些输入的属性值并不能直接被我们的学习模型所用，需要进行相应的处理，对于连续值的属性，一般都可以被学习器所用，有时会根据具体的情形作相应的预处理，例如：归一化等；对于离散值的属性，可作下面的处理：
 
-- 若属性值之间存在“序关系”，则可以将其转化为连续值，例如：身高属性分为“高”“中等”“矮”，可转化为数值：{1， 0.5， 0}。
+- 若属性值之间存在"序关系"，则可以将其转化为连续值，例如：身高属性分为"高""中等""矮"，可转化为数值：{1， 0.5， 0}。
 
-- 若属性值之间不存在“序关系”，则通常将其转化为向量的形式，例如：性别属性分为“男”“女”，可转化为二维向量：{（1，0），（0，1）}。
+- 若属性值之间不存在"序关系"，则通常将其转化为向量的形式，例如：性别属性分为"男""女"，可转化为二维向量：{（1，0），（0，1）}。
 
 ### 3.1.1
 
-当输入属性只有一个的时候，就是最简单的情形，也就是我们高中时最熟悉的“最小二乘法”（Euclidean distance），首先计算出每个样本预测值与真实值之间的误差并求和，通过最小化均方误差MSE，使用求偏导等于零的方法计算出拟合直线y=wx+b的两个参数w和b，计算过程如下图所示：
+当输入属性只有一个的时候，就是最简单的情形，也就是我们高中时最熟悉的"最小二乘法"（Euclidean distance），首先计算出每个样本预测值与真实值之间的误差并求和，通过最小化均方误差MSE，使用求偏导等于零的方法计算出拟合直线y=wx+b的两个参数w和b，计算过程如下图所示：
 
 ![2.png](5bc722b0ccec4.png)
 
@@ -127,7 +127,7 @@ $$
 $$
 令式（3.5）等于0，讲上面的结果带入3.5可得：
 $$
-\begin{aligned}	 
+\begin{aligned}
     w\sum_{i=1}^{m}x_i^2 & = \sum_{i=1}^{m}y_ix_i-\sum_{i=1}^{m}(\bar{y}-w\bar{x})x_i \\
     w\sum_{i=1}^{m}x_i^2 & = \sum_{i=1}^{m}y_ix_i-\bar{y}\sum_{i=1}^{m}x_i+w\bar{x}\sum_{i=1}^{m}x_i \\
     w(\sum_{i=1}^{m}x_i^2-\bar{x}\sum_{i=1}^{m}x_i) & = \sum_{i=1}^{m}y_ix_i-\bar{y}\sum_{i=1}^{m}x_i \\
@@ -142,7 +142,7 @@ $$
 
 【注】：式（3.7）还可以进一步化简为能用向量表达的形式，将$ \cfrac{1}{m}(\sum_{i=1}^{m}x_i)^2=\bar{x}\sum_{i=1}^{m}x_i $代入分母可得：
 $$
-\begin{aligned}	  
+\begin{aligned}
      w & = \cfrac{\sum_{i=1}^{m}y_i(x_i-\bar{x})}{\sum_{i=1}^{m}x_i^2-\bar{x}\sum_{i=1}^{m}x_i} \\
      & = \cfrac{\sum_{i=1}^{m}(y_ix_i-y_i\bar{x})}{\sum_{i=1}^{m}(x_i^2-x_i\bar{x})}
 \end{aligned}
@@ -273,7 +273,7 @@ $$
 然后利用这两个公式，我们对上面的损失函数进行微分：
 $$
 \begin{aligned}
-\frac{\partial E_{\hat{\boldsymbol{w}}}}{\partial \hat{\boldsymbol{w}}} 
+\frac{\partial E_{\hat{\boldsymbol{w}}}}{\partial \hat{\boldsymbol{w}}}
 &=-\frac{\partial \boldsymbol{y}^{T} \mathbf{X} \hat{\boldsymbol{w}}}{\partial \hat{\boldsymbol{w}}}-\frac{\partial \hat{\boldsymbol{w}}^{T} \mathbf{X}^{T} \boldsymbol{y}}{\partial \hat{\boldsymbol{w}}}+\frac{\partial \hat{\boldsymbol{w}}^{T} \mathbf{X}^{T} \mathbf{X} \hat{\boldsymbol{w}}}{\partial \hat{\boldsymbol{w}}}
 =-\mathbf{X}^{T} \boldsymbol{y}-\mathbf{X}^{T} \boldsymbol{y}+\left(\mathbf{X}^{T} \mathbf{X}+\mathbf{X}^{T} \mathbf{X}\right) \hat{w}=2 \mathbf{X}^{T}(\mathbf{X} \hat{w}-\boldsymbol{y})
 \end{aligned}
@@ -312,7 +312,7 @@ $$
 
 #### 广义线性回归
 
-更一般地，考虑所有y的衍生物的情形，就得到了“广义的线性模型”（generalized linear model），其中，g（*）称为联系函数（link function）。
+更一般地，考虑所有y的衍生物的情形，就得到了"广义的线性模型"（generalized linear model），其中，g（*）称为联系函数（link function）。
 
 ![8.png](5bc722b0a2841.png)
 
@@ -324,7 +324,7 @@ $$
 
 ![10.png](5bc722b0a655d.png)
 
-若将y看做样本为正例的概率，（1-y）看做样本为反例的概率，则上式实际上使用线性回归模型的预测结果器逼近真实标记的对数几率。因此这个模型称为“对数几率回归”（logistic regression），也有一些书籍称之为“逻辑回归”。下面使用最大似然估计的方法来计算出w和b两个参数的取值，下面只列出求解的思路，不列出具体的计算过程。
+若将y看做样本为正例的概率，（1-y）看做样本为反例的概率，则上式实际上使用线性回归模型的预测结果器逼近真实标记的对数几率。因此这个模型称为"对数几率回归"（logistic regression），也有一些书籍称之为"逻辑回归"。下面使用最大似然估计的方法来计算出w和b两个参数的取值，下面只列出求解的思路，不列出具体的计算过程。
 
 ![11.png](5bc723b824f0c.png)
 
@@ -506,10 +506,10 @@ $$
 [解析]：此式可以进行向量化，令$p_1(\hat{\boldsymbol x}_i;\beta)=\hat{y}_i$，代入上式得：
 $$
 \begin{aligned}
-	\frac{\partial l(\beta)}{\partial \beta} &= -\sum_{i=1}^{m}\hat{\boldsymbol x}_i(y_i-\hat{y}_i) \\
-	& =\sum_{i=1}^{m}\hat{\boldsymbol x}_i(\hat{y}_i-y_i) \\
-	& ={\boldsymbol X^T}(\hat{\boldsymbol y}-\boldsymbol{y}) \\
-	& ={\boldsymbol X^T}(p_1(\boldsymbol X;\beta)-\boldsymbol{y}) \\
+    \frac{\partial l(\beta)}{\partial \beta} &= -\sum_{i=1}^{m}\hat{\boldsymbol x}_i(y_i-\hat{y}_i) \\
+    & =\sum_{i=1}^{m}\hat{\boldsymbol x}_i(\hat{y}_i-y_i) \\
+    & ={\boldsymbol X^T}(\hat{\boldsymbol y}-\boldsymbol{y}) \\
+    & ={\boldsymbol X^T}(p_1(\boldsymbol X;\beta)-\boldsymbol{y}) \\
 \end{aligned}
 $$
 
@@ -531,7 +531,7 @@ $$
 
 ![16.png](5bc723b7e9db3.png)
 
-因此得到了LDA的最大化目标：“广义瑞利商”（generalized Rayleigh quotient）。
+因此得到了LDA的最大化目标："广义瑞利商"（generalized Rayleigh quotient）。
 
 ![17.png](5bc723b7e8a61.png)
 
@@ -539,12 +539,12 @@ $$
 
 ![18.png](5bc723b83d5e0.png)
 
-若将w看做一个投影矩阵，类似PCA的思想，则LDA可将样本投影到N-1维空间（N为类簇数），投影的过程使用了类别信息（标记信息），因此LDA也常被视为一种经典的监督降维技术。    
-​             
+若将w看做一个投影矩阵，类似PCA的思想，则LDA可将样本投影到N-1维空间（N为类簇数），投影的过程使用了类别信息（标记信息），因此LDA也常被视为一种经典的监督降维技术。
+​
 
 ## **3.4 多分类学习**
 
-现实中我们经常遇到不只两个类别的分类问题，即多分类问题，在这种情形下，我们常常运用“拆分”的策略，通过多个二分类学习器来解决多分类问题，即将多分类问题拆解为多个二分类问题，训练出多个二分类学习器，最后将多个分类结果进行集成得出结论。最为经典的拆分策略有三种：“一对一”（OvO）、“一对其余”（OvR）和“多对多”（MvM），核心思想与示意图如下所示。
+现实中我们经常遇到不只两个类别的分类问题，即多分类问题，在这种情形下，我们常常运用"拆分"的策略，通过多个二分类学习器来解决多分类问题，即将多分类问题拆解为多个二分类问题，训练出多个二分类学习器，最后将多个分类结果进行集成得出结论。最为经典的拆分策略有三种："一对一"（OvO）、"一对其余"（OvR）和"多对多"（MvM），核心思想与示意图如下所示。
 
 + OvO：给定数据集D，假定其中有N个真实类别，将这N个类别进行两两配对（一个正类/一个反类），从而产生N（N-1）/2个二分类学习器，在测试阶段，将新样本放入所有的二分类学习器中测试，得出N（N-1）个结果，最终通过投票产生最终的分类结果。
 
@@ -560,10 +560,10 @@ $$
 
 类别不平衡（class-imbanlance）就是指分类问题中不同类别的训练样本相差悬殊的情况，例如正例有900个，而反例只有100个，这个时候我们就需要进行相应的处理来平衡这个问题。常见的做法有三种：
 
-1.  在训练样本较多的类别中进行“欠采样”（undersampling）,比如从正例中采出100个，常见的算法有：EasyEnsemble。
-2.  在训练样本较少的类别中进行“过采样”（oversampling）,例如通过对反例中的数据进行插值，来产生额外的反例，常见的算法有SMOTE。
-3.  直接基于原数据集进行学习，对预测值进行“再缩放”处理。其中再缩放也是代价敏感学习的基础。
-4.  ![21.png](5bc726fe87ae2.png)      
+1.  在训练样本较多的类别中进行"欠采样"（undersampling）,比如从正例中采出100个，常见的算法有：EasyEnsemble。
+2.  在训练样本较少的类别中进行"过采样"（oversampling）,例如通过对反例中的数据进行插值，来产生额外的反例，常见的算法有SMOTE。
+3.  直接基于原数据集进行学习，对预测值进行"再缩放"处理。其中再缩放也是代价敏感学习的基础。
+4.  ![21.png](5bc726fe87ae2.png)
 
 ----------
 
@@ -574,11 +574,11 @@ $$
 $$J=\cfrac{\boldsymbol w^T(\mu_0-\mu_1)(\mu_0-\mu_1)^T\boldsymbol w}{\boldsymbol w^T(\Sigma_0+\Sigma_1)\boldsymbol w}$$
 [推导]：
 $$\begin{aligned}
-	J &= \cfrac{\big|\big|\boldsymbol w^T\mu_0-\boldsymbol w^T\mu_1\big|\big|_2^2}{\boldsymbol w^T(\Sigma_0+\Sigma_1)\boldsymbol w} \\
-	&= \cfrac{\big|\big|(\boldsymbol w^T\mu_0-\boldsymbol w^T\mu_1)^T\big|\big|_2^2}{\boldsymbol w^T(\Sigma_0+\Sigma_1)\boldsymbol w} \\
-	&= \cfrac{\big|\big|(\mu_0-\mu_1)^T\boldsymbol w\big|\big|_2^2}{\boldsymbol w^T(\Sigma_0+\Sigma_1)\boldsymbol w} \\
-	&= \cfrac{[(\mu_0-\mu_1)^T\boldsymbol w]^T(\mu_0-\mu_1)^T\boldsymbol w}{\boldsymbol w^T(\Sigma_0+\Sigma_1)\boldsymbol w} \\
-	&= \cfrac{\boldsymbol w^T(\mu_0-\mu_1)(\mu_0-\mu_1)^T\boldsymbol w}{\boldsymbol w^T(\Sigma_0+\Sigma_1)\boldsymbol w}
+    J &= \cfrac{\big|\big|\boldsymbol w^T\mu_0-\boldsymbol w^T\mu_1\big|\big|_2^2}{\boldsymbol w^T(\Sigma_0+\Sigma_1)\boldsymbol w} \\
+    &= \cfrac{\big|\big|(\boldsymbol w^T\mu_0-\boldsymbol w^T\mu_1)^T\big|\big|_2^2}{\boldsymbol w^T(\Sigma_0+\Sigma_1)\boldsymbol w} \\
+    &= \cfrac{\big|\big|(\mu_0-\mu_1)^T\boldsymbol w\big|\big|_2^2}{\boldsymbol w^T(\Sigma_0+\Sigma_1)\boldsymbol w} \\
+    &= \cfrac{[(\mu_0-\mu_1)^T\boldsymbol w]^T(\mu_0-\mu_1)^T\boldsymbol w}{\boldsymbol w^T(\Sigma_0+\Sigma_1)\boldsymbol w} \\
+    &= \cfrac{\boldsymbol w^T(\mu_0-\mu_1)(\mu_0-\mu_1)^T\boldsymbol w}{\boldsymbol w^T(\Sigma_0+\Sigma_1)\boldsymbol w}
 \end{aligned}$$
 
 ## 3.37
@@ -590,7 +590,7 @@ $$\boldsymbol S_b\boldsymbol w=\lambda\boldsymbol S_w\boldsymbol w$$
 $$
 \begin{aligned}
 \cfrac{\partial l(\boldsymbol w)}{\partial \boldsymbol w} &= -\cfrac{\partial(\boldsymbol w^T\boldsymbol S_b\boldsymbol w)}{\partial \boldsymbol w}+\lambda \cfrac{\partial(\boldsymbol w^T\boldsymbol S_w\boldsymbol w-1)}{\partial \boldsymbol w} \\
-	&= -(\boldsymbol S_b+\boldsymbol S_b^T)\boldsymbol w+\lambda(\boldsymbol S_w+\boldsymbol S_w^T)\boldsymbol w
+    &= -(\boldsymbol S_b+\boldsymbol S_b^T)\boldsymbol w+\lambda(\boldsymbol S_w+\boldsymbol S_w^T)\boldsymbol w
 \end{aligned}
 $$
 又$\boldsymbol S_b=\boldsymbol S_b^T,\boldsymbol S_w=\boldsymbol S_w^T$，则：

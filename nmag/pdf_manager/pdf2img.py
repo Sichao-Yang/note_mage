@@ -10,10 +10,10 @@ from utils import *
 
 def main(input_path, output_folder):
     images = convert_from_path(input_path)
-    
+
     if not osp.exists(output_folder):
         os.makedirs(output_folder)
-        
+
     for i in range(len(images)):
         path = osp.join(output_folder, "p" + str(i) + ".jpg")
         images[i].save(path, "JPEG")

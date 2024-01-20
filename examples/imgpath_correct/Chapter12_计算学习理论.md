@@ -2,7 +2,7 @@
 
 # **13 计算学习理论**
 
-计算学习理论（computational learning theory）是通过“计算”来研究机器学习的理论，简而言之，其目的是分析学习任务的本质，例如：**在什么条件下可进行有效的学习，需要多少训练样本能获得较好的精度等，从而为机器学习算法提供理论保证**。
+计算学习理论（computational learning theory）是通过"计算"来研究机器学习的理论，简而言之，其目的是分析学习任务的本质，例如：**在什么条件下可进行有效的学习，需要多少训练样本能获得较好的精度等，从而为机器学习算法提供理论保证**。
 
 首先我们回归初心，再来谈谈经验误差和泛化误差。假设给定训练集D，其中所有的训练样本都服从一个未知的分布T，且它们都是在总体分布T中独立采样得到，即**独立同分布**（independent and identically distributed，i.i.d.），在《贝叶斯分类器》中我们已经提到：独立同分布是很多统计学习算法的基础假设，例如最大似然法，贝叶斯分类器，高斯混合聚类等，简单来理解独立同分布：每个样本都是从总体分布中独立采样得到，而没有拖泥带水。例如现在要进行问卷调查，要从总体人群中随机采样，看到一个美女你高兴地走过去，结果她男票突然冒了出来，说道：you jump，i jump，于是你本来只想调查一个人结果被强行撒了一把狗粮得到两份问卷，这样这两份问卷就不能称为独立同分布了，因为它们的出现具有强相关性。
 
@@ -15,8 +15,8 @@
 在高中课本中，我们将**函数定义为：从自变量到因变量的一种映射；对于机器学习算法，学习器也正是为了寻找合适的映射规则**，即如何从条件属性得到目标属性。从样本空间到标记空间存在着很多的映射，我们将每个映射称之为**概念**（concept），定义：
 
 
-> 若概念c对任何样本x满足c(x)=y，则称c为**目标概念**，即最理想的映射，所有的目标概念构成的集合称为**“概念类”**；
-> 给定学习算法，它所有可能映射/概念的集合称为**“假设空间”**，其中单个的概念称为**“假设”**（hypothesis）；
+> 若概念c对任何样本x满足c(x)=y，则称c为**目标概念**，即最理想的映射，所有的目标概念构成的集合称为**"概念类"**；
+> 给定学习算法，它所有可能映射/概念的集合称为**"假设空间"**，其中单个的概念称为**"假设"**（hypothesis）；
 > 若一个算法的假设空间包含目标概念，则称该数据集对该算法是**可分**（separable）的，亦称**一致**（consistent）的；
 > 若一个算法的假设空间不包含目标概念，则称该数据集对该算法是**不可分**（non-separable）的，或称**不一致**（non-consistent）的。
 
@@ -71,7 +71,7 @@
 >
 > ![11.png](https://i.loli.net/2018/10/18/5bc855ba970cd.png)
 
-> **打散**：例如对二分类问题来说，m个样本最多有2^m个可能结果，每种可能结果称为一种**“对分”**，若假设空间能实现数据集D的所有对分，则称数据集能被该假设空间打散。
+> **打散**：例如对二分类问题来说，m个样本最多有2^m个可能结果，每种可能结果称为一种**"对分"**，若假设空间能实现数据集D的所有对分，则称数据集能被该假设空间打散。
 
 **因此尽管假设空间是无限的，但它对特定数据集打标的不同结果数是有限的，假设空间的VC维正是它能打散的最大数据集大小**。通常这样来计算假设空间的VC维：若存在大小为d的数据集能被假设空间打散，但不存在任何大小为d+1的数据集能被假设空间打散，则其VC维为d。
 
@@ -107,7 +107,7 @@
 
 事实上，**若学习算法符合经验风险最小化原则（ERM）且满足β-均匀稳定性，则假设空间是可学习的**。稳定性通过损失函数与假设空间的可学习联系在了一起，区别在于：假设空间关注的是经验误差与泛化误差，需要考虑到所有可能的假设；而稳定性只关注当前的输出假设。
 
-在此，计算学习理论就介绍完毕，一看这个名字就知道这一章比较偏底层理论了，最终还是咬着牙看完了它，这里引用一段小文字来梳理一下现在的心情：“孤岂欲卿治经为博士邪？但当涉猎，见往事耳”，就当扩充知识体系吧~
+在此，计算学习理论就介绍完毕，一看这个名字就知道这一章比较偏底层理论了，最终还是咬着牙看完了它，这里引用一段小文字来梳理一下现在的心情："孤岂欲卿治经为博士邪？但当涉猎，见往事耳"，就当扩充知识体系吧~
 
 ### 12.1
 
@@ -137,7 +137,7 @@ $$
 
 
 
-[解析]：假设我们有两个模型$h_1$和$h_2$，将它们同时作用于样本$\boldsymbol{x}$上，那么他们的”不合“度定义为这两个模型预测值不相同的概率。
+[解析]：假设我们有两个模型$h_1$和$h_2$，将它们同时作用于样本$\boldsymbol{x}$上，那么他们的"不合"度定义为这两个模型预测值不相同的概率。
 
 
 
@@ -223,7 +223,7 @@ $$
 
 
 
-[解析]：先解释什么是$h$与$D$“表现一致”，12.2节开头阐述了这样的概念，如果$h$能将$D$中所有样本按与真实标记一致的方式完全分开，我们则称$h$对$D$是一致的。即$\left(h\left(\boldsymbol{x}_{1}\right)=y_{1}\right) \wedge \ldots \wedge\left(h\left(\boldsymbol{x}_{m}\right)=y_{m}\right)$为True。因为每个事件是独立的，所以上式可以写成$P\left(\left(h\left(\boldsymbol{x}_{1}\right)=y_{1}\right) \wedge \ldots \wedge\left(h\left(\boldsymbol{x}_{m}\right)=y_{m}\right)\right)=\prod_{i=1}^{m} P\left(h\left(\boldsymbol{x}_{i}\right)=y_{i}\right)$。根据对立事件的定义有：$\prod_{i=1}^{m} P\left(h\left(\boldsymbol{x}_{i}\right)=y_{i}\right)=\prod_{i=1}^{m}\left(1-P\left(h\left(\boldsymbol{x}_{i}\right) \neq y_{i}\right)\right)$，又根据公式(12.10)，有$$\prod_{i=1}^{m}\left(1-P\left(h\left(\boldsymbol{x}_{i}\right) \neq y_{i}\right)\right)<\prod_{i=1}^{m}(1-\epsilon)=(1-\epsilon)^{m}$$
+[解析]：先解释什么是$h$与$D$"表现一致"，12.2节开头阐述了这样的概念，如果$h$能将$D$中所有样本按与真实标记一致的方式完全分开，我们则称$h$对$D$是一致的。即$\left(h\left(\boldsymbol{x}_{1}\right)=y_{1}\right) \wedge \ldots \wedge\left(h\left(\boldsymbol{x}_{m}\right)=y_{m}\right)$为True。因为每个事件是独立的，所以上式可以写成$P\left(\left(h\left(\boldsymbol{x}_{1}\right)=y_{1}\right) \wedge \ldots \wedge\left(h\left(\boldsymbol{x}_{m}\right)=y_{m}\right)\right)=\prod_{i=1}^{m} P\left(h\left(\boldsymbol{x}_{i}\right)=y_{i}\right)$。根据对立事件的定义有：$\prod_{i=1}^{m} P\left(h\left(\boldsymbol{x}_{i}\right)=y_{i}\right)=\prod_{i=1}^{m}\left(1-P\left(h\left(\boldsymbol{x}_{i}\right) \neq y_{i}\right)\right)$，又根据公式(12.10)，有$$\prod_{i=1}^{m}\left(1-P\left(h\left(\boldsymbol{x}_{i}\right) \neq y_{i}\right)\right)<\prod_{i=1}^{m}(1-\epsilon)=(1-\epsilon)^{m}$$
 
 
 
@@ -233,7 +233,7 @@ $$
 \begin{aligned} P(h \in \mathcal{H}: E(h)>\epsilon \wedge \widehat{E}(h)=0) &<|\mathcal{H}|(1-\epsilon)^{m} \\ &<|\mathcal{H}| e^{-m \epsilon} \end{aligned}
 $$
 
-[解析]：首先解释为什么”我们事先并不知道学习算法$\mathcal{L}$会输出$\mathcal{H}$中的哪个假设“，因为一些学习算法对用一个观察集$D$的输出结果是非确定的，比如感知机就是个典型的例子，训练样本的顺序也会影响感知机学习到的假设$h$参数的值。泛化误差大于$\epsilon$且经验误差为0的假设(即在训练集上表现完美的假设)出现的概率可以表示为$P(h \in \mathcal{H}: E(h)>\epsilon \wedge \widehat{E}(h)=0)$，根据式12.11，每一个这样的假设$h$都满足$P(E(h)>\epsilon \wedge \widehat{E}(h)=0)<\left(1-\epsilon \right)^m$，假设一共有$\vert\mathcal{H}\vert$这么多个这样的假设$h$，因为每个假设$h$满足$E(h)>\epsilon$和$\widehat{E}(h)=0$成立的事件是互斥的，因此总的概率$P(h \in \mathcal{H}: E(h)>\epsilon \wedge \widehat{E}(h)=0)$就是这些互斥事件之和即
+[解析]：首先解释为什么"我们事先并不知道学习算法$\mathcal{L}$会输出$\mathcal{H}$中的哪个假设"，因为一些学习算法对用一个观察集$D$的输出结果是非确定的，比如感知机就是个典型的例子，训练样本的顺序也会影响感知机学习到的假设$h$参数的值。泛化误差大于$\epsilon$且经验误差为0的假设(即在训练集上表现完美的假设)出现的概率可以表示为$P(h \in \mathcal{H}: E(h)>\epsilon \wedge \widehat{E}(h)=0)$，根据式12.11，每一个这样的假设$h$都满足$P(E(h)>\epsilon \wedge \widehat{E}(h)=0)<\left(1-\epsilon \right)^m$，假设一共有$\vert\mathcal{H}\vert$这么多个这样的假设$h$，因为每个假设$h$满足$E(h)>\epsilon$和$\widehat{E}(h)=0$成立的事件是互斥的，因此总的概率$P(h \in \mathcal{H}: E(h)>\epsilon \wedge \widehat{E}(h)=0)$就是这些互斥事件之和即
 $$
 \begin{aligned}P\left(h \in \mathcal{H}: E(h)>\epsilon \wedge \widehat{E}(h)=0\right) &=\sum_i^{\mathcal{\vert H\vert}}P\left(E(h_i)>\epsilon \wedge \widehat{E}(h_i)=0\right)\\&<|\mathcal{H}|(1-\epsilon)^{m}\end{aligned}
 $$
@@ -340,9 +340,9 @@ $$
 
 令$h_1,h_2,\dots,h_{\vert\mathcal{H}\vert}$表示假设空间$\mathcal{H}$中的假设，有
 $$
-\begin{aligned} 
+\begin{aligned}
 & P(\exists h \in \mathcal{H}:|E(h)-\widehat{E}(h)|>\epsilon) \\
-=& P\left(\left(\left|E_{h_{1}}-\widehat{E}_{h_{1}}\right|>\epsilon\right) \vee \ldots \vee\left(| E_{h_{|\mathcal{H}|}}-\widehat{E}_{h_{|\mathcal{H}|} |>\epsilon}\right)\right) \\ \leqslant & \sum_{h \in \mathcal{H}} P(|E(h)-\widehat{E}(h)|>\epsilon) 
+=& P\left(\left(\left|E_{h_{1}}-\widehat{E}_{h_{1}}\right|>\epsilon\right) \vee \ldots \vee\left(| E_{h_{|\mathcal{H}|}}-\widehat{E}_{h_{|\mathcal{H}|} |>\epsilon}\right)\right) \\ \leqslant & \sum_{h \in \mathcal{H}} P(|E(h)-\widehat{E}(h)|>\epsilon)
 \end{aligned}
 $$
 这一步是很好理解的，存在一个假设$h$使得$|E(h)-\widehat{E}(h)|>\epsilon$的概率可以表示为对假设空间内所有的假设$h_i, i\in 1,\dots,\vert\mathcal{H}\vert$，使得$\left|E_{h_{i}}-\widehat{E}_{h_{i}}\right|>\epsilon$这个事件的"或"事件。因为$P(A\vee B)=P(A) + P(B) - P(A\wedge B)$，而$P(A\wedge B)\geqslant 0$，所以最后一行的不等式成立。
@@ -357,7 +357,7 @@ $$
 因此：
 $$
 \begin{aligned}
-P(\exists h \in \mathcal{H}:|E(h)-\widehat{E}(h)|>\epsilon) 
+P(\exists h \in \mathcal{H}:|E(h)-\widehat{E}(h)|>\epsilon)
 &\leqslant  \sum_{h \in \mathcal{H}} P(|E(h)-\widehat{E}(h)|>\epsilon)\\
 &\leqslant 2|\mathcal{H}| \exp \left(-2 m \epsilon^{2}\right)
 \end{aligned}
@@ -382,7 +382,7 @@ $$
 P\left(E(h)-\min _{h^{\prime} \in \mathcal{H}} E\left(h^{\prime}\right) \leqslant \epsilon\right) \geqslant 1-\delta
 $$
 
-[解析]：这个式子是”不可知PAC可学习“的定义式，不可知是指当目标概念$c$不在算法$\mathcal{L}$所能生成的假设空间$\mathcal{H}$里。可学习是指如果$\mathcal{H}$中泛化误差最小的假设是$\arg\min_{h\in \mathcal{H}}E(h)$，且这个假设的泛化误差满足其与目标概念的泛化误差的差值不大于$\epsilon$的概率不小于$1-\delta$。我们称这样的假设空间$\mathcal{H}$是不可知PAC可学习的。
+[解析]：这个式子是"不可知PAC可学习"的定义式，不可知是指当目标概念$c$不在算法$\mathcal{L}$所能生成的假设空间$\mathcal{H}$里。可学习是指如果$\mathcal{H}$中泛化误差最小的假设是$\arg\min_{h\in \mathcal{H}}E(h)$，且这个假设的泛化误差满足其与目标概念的泛化误差的差值不大于$\epsilon$的概率不小于$1-\delta$。我们称这样的假设空间$\mathcal{H}$是不可知PAC可学习的。
 
 
 
@@ -517,7 +517,7 @@ $$
 
 [推导]：
 $$
-\begin{aligned} \Pi_{\mathcal{H}}(m) & \leqslant \sum_{i=0}^{d}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) \\ & \leqslant \sum_{i=0}^{d}\left(\begin{array}{c}{m} \\ {i}\end{array}\right)\left(\frac{m}{d}\right)^{d-i} \\ &=\left(\frac{m}{d}\right)^{d} \sum_{i=0}^{d}\left(\begin{array}{c}{m} \\ {i}\end{array}\right)\left(\frac{d}{m}\right)^{i} \\ & \leqslant\left(\frac{m}{d}\right)^{d} \sum_{i=0}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right)\left(\frac{d}{m}\right)^{i} \\ 
+\begin{aligned} \Pi_{\mathcal{H}}(m) & \leqslant \sum_{i=0}^{d}\left(\begin{array}{c}{m} \\ {i}\end{array}\right) \\ & \leqslant \sum_{i=0}^{d}\left(\begin{array}{c}{m} \\ {i}\end{array}\right)\left(\frac{m}{d}\right)^{d-i} \\ &=\left(\frac{m}{d}\right)^{d} \sum_{i=0}^{d}\left(\begin{array}{c}{m} \\ {i}\end{array}\right)\left(\frac{d}{m}\right)^{i} \\ & \leqslant\left(\frac{m}{d}\right)^{d} \sum_{i=0}^{m}\left(\begin{array}{c}{m} \\ {i}\end{array}\right)\left(\frac{d}{m}\right)^{i} \\
 &={\left(\frac{m}{d}\right)}^d{\left(1+\frac{d}{m}\right)}^m\\
 &<\left(\frac{e \cdot m}{d}\right)^{d} \end{aligned}
 $$
@@ -539,9 +539,9 @@ $$
 
 [推导]：这里应该是作者的笔误，根据式12.22，$E(h)-\widehat{E}(h)$应当被绝对值符号包裹。将式12.28带入式12.22得
 $$
-P\left(\vert 
+P\left(\vert
 E(h)-\widehat{E}(h) \vert> \epsilon
-\right) 
+\right)
 \leqslant 4{\left(\frac{2em}{d}\right)}^d\exp\left(-\frac{m\epsilon^2}{8}\right)
 $$
 令$4{\left(\frac{2em}{d}\right)}^d\exp\left(-\frac{m\epsilon^2}{8}\right)=\delta$可解得
@@ -596,7 +596,7 @@ $$
 $$
 由式12.29可知
 $$
-P\left(\left\vert 
+P\left(\left\vert
 E(h)-\widehat{E}(h) \right\vert\leqslant \frac{\epsilon}{2}
 
 \right)
@@ -611,12 +611,12 @@ $$
 \begin{aligned}
 &P\left(
 \left(E(g)-\widehat{E}(g) \geqslant -\frac{\epsilon}{2} \right)\wedge\left(E(h)-\widehat{E}(h) \leqslant \frac{\epsilon}{2}
-\right)\right) 
+\right)\right)
 \\= &
 P\left(E(g)-\widehat{E}(g) \geqslant -\frac{\epsilon}{2}\right) +
 P\left(E(h)-\widehat{E}(h) \leqslant \frac{\epsilon}{2}\right)
 - P\left(\left(E(g)-\widehat{E}(g) \geqslant -\frac{\epsilon}{2} \right)\vee\left(E(h)-\widehat{E}(h) \leqslant \frac{\epsilon}{2}
-\right)\right) 
+\right)\right)
 \\\geqslant &1 - \delta/2 + 1 - \delta/2 - 1
 \\=& 1-\delta
 \end{aligned}
@@ -632,7 +632,7 @@ $$
 因此
 $$
 P\left(
-\widehat{E}(g)-E(g)+E(h)-\widehat{E}(h)\leqslant\frac{\epsilon}{2} + \frac{\epsilon}{2} 
+\widehat{E}(g)-E(g)+E(h)-\widehat{E}(h)\leqslant\frac{\epsilon}{2} + \frac{\epsilon}{2}
 \right) = P\left(E(h)-E(g)\leqslant\widehat{E}(h)-\widehat{E}(g)+\epsilon\right)
 \geqslant 1 - \delta
 $$
@@ -703,7 +703,7 @@ $$
 \mathbb{E}_{\boldsymbol{\sigma}}\left[\sup _{h \in \mathcal{H}} \frac{1}{m} \sum_{i=1}^{m} \sigma_{i} h\left(\boldsymbol{x}_{i}\right)\right]
 $$
 
-[解析]：这个式子可以用来衡量假设空间$\mathcal{H}$的表达能力，对变量$\sigma$求期望可以理解为当变量$\sigma$包含所有可能的结果时，假设空间$\mathcal{H}$中最契合的假设$h$和变量的平均契合程度。因为前提假设是2分类的问题，因此$\sigma_i$一共有$2^m$种，这些不同的$\sigma_i$构成了数据集$D=\{(x_1, y_1), (x_2, y_2),\dots, (x_m, y_m)\}$的”对分“(12.4节)，如果一个假设空间的表达能力越强，那么就越有可能对于每一种$\sigma_i$，假设空间中都存在一个$h$使得$h(x_i)$和$\sigma_i$非常接近甚至相同，对所有可能的$\sigma_i$取期望即可衡量假设空间的整体表达能力，这就是这个式子的含义。
+[解析]：这个式子可以用来衡量假设空间$\mathcal{H}$的表达能力，对变量$\sigma$求期望可以理解为当变量$\sigma$包含所有可能的结果时，假设空间$\mathcal{H}$中最契合的假设$h$和变量的平均契合程度。因为前提假设是2分类的问题，因此$\sigma_i$一共有$2^m$种，这些不同的$\sigma_i$构成了数据集$D=\{(x_1, y_1), (x_2, y_2),\dots, (x_m, y_m)\}$的"对分"(12.4节)，如果一个假设空间的表达能力越强，那么就越有可能对于每一种$\sigma_i$，假设空间中都存在一个$h$使得$h(x_i)$和$\sigma_i$非常接近甚至相同，对所有可能的$\sigma_i$取期望即可衡量假设空间的整体表达能力，这就是这个式子的含义。
 
 
 
@@ -928,21 +928,3 @@ $$
 P(\ell(\mathfrak{L}, \mathcal{D})-\ell(g, \mathcal{D})\leqslant\epsilon)\geqslant 1-\delta
 $$
 又因为$m$为关于$\left(1/\epsilon,1/\delta,\text{size}(x),\text{size}(c)\right)$的多项式，因此根据定理12.2，定理12.5，得到结论$\mathcal{H}$是(不可知)PAC可学习的。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

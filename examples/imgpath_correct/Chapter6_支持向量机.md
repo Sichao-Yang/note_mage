@@ -118,7 +118,7 @@ $$
 \text { s.t. } & y^{(i)}\left(w^{T} x^{(i)}+b\right) \geq 1, \quad i=1, \ldots, m
 \end{aligned}
 $$
-这个上式的解就是我们想要的optimal margin classifier. 我们可以用任何的commercial quadratic programming code去做。这也是所谓的==原始SVM==。  
+这个上式的解就是我们想要的optimal margin classifier. 我们可以用任何的commercial quadratic programming code去做。这也是所谓的==原始SVM==。
 
 下面补充证明SVM原始形式的一个重要性质：
 
@@ -195,9 +195,9 @@ $$
 
 接下来要讲怎么==把原始SVM转化成它的对偶问题，然后用SMO（sequential-minimal-optimization）算法来高效求解，因为原始SVM的一大问题就是求解比较慢==。由于内容本身有难度，所以我先补充一个Victor Lavrenko教授的简易讲解版：
 
-首先已知一个包含正负类样本的文本数据集，我们要找一个linear classifier - w’x把它们分开，然后通过这个classifier去分类未来收到的新样本。我们可以这样去找这个classifier：首先量出正负类样本的centroid。然后在它们两点间连线，这个向量我们记为w。再取一个垂直于w的平面，也就是红色标记的超平面。这个平面就是要找的classifier，它可以表示为w’x。
+首先已知一个包含正负类样本的文本数据集，我们要找一个linear classifier - w'x把它们分开，然后通过这个classifier去分类未来收到的新样本。我们可以这样去找这个classifier：首先量出正负类样本的centroid。然后在它们两点间连线，这个向量我们记为w。再取一个垂直于w的平面，也就是红色标记的超平面。这个平面就是要找的classifier，它可以表示为w'x。
 
-为什么这个平面能帮我们分类呢？想象现在我们收到有一个新的d样本，为了划分它为正还是为负，我们把他和c+，c-做点乘，再取差值就能看出它更接近谁。而c~+~ - c~-~其实就是向量w，所以这个过程其实就是w’x：
+为什么这个平面能帮我们分类呢？想象现在我们收到有一个新的d样本，为了划分它为正还是为负，我们把他和c+，c-做点乘，再取差值就能看出它更接近谁。而c~+~ - c~-~其实就是向量w，所以这个过程其实就是w'x：
 
 <img src="media\Chapter6_支持向量机\SVM0.JPG" alt="SVM0" style="zoom:80%;" />
 
@@ -297,7 +297,7 @@ $$
 \begin{array}{cl}
 \max _{\alpha} \min _{\boldsymbol{w}, b} & \frac{1}{2}\|\boldsymbol{w}\|^{2}+\sum_{i=1}^{m} \alpha_{i}\left(1-\boldsymbol{y}_{i}\left(\boldsymbol{w}^{T} \boldsymbol{x}_{i}+b\right)\right) \\
 \text { s.t. } & \alpha_{i} \geq 0 \quad \text { for } i=1, \ldots, m
-\end{array}		\tag1
+\end{array}     \tag1
 $$
 对w和b求导令为零（式6.9和6.10）
 $$
@@ -457,7 +457,7 @@ $$
 
 \begin{aligned}
 \text { s.t. } \quad \alpha_{1} y_{1}+\alpha_{2} y_{2} &=-\sum_{i=3}^{m} y_{i} \alpha_{i}=\xi \\
-\alpha_{i} & \geq 0, \quad i=1,2	\quad其中，K_{ij}=x^T_i x_j
+\alpha_{i} & \geq 0, \quad i=1,2    \quad其中，K_{ij}=x^T_i x_j
 \end{aligned}
 $$
 观察上式可知，这是一个二元二次问题。留意到约束的存在，我们可以将问题再次转换成带约束的一元二次问题。对于一元二次问题，我们可以通过比较最终指点和可行域之间关系，获得在可行域中的最值。
@@ -589,7 +589,7 @@ $$
 
 ![21.png](media\Chapter6_支持向量机\5bc730cc68b3b.png)
 
-（2）原分类函数变为：​  
+（2）原分类函数变为：​
 
 ![22.png](media\Chapter6_支持向量机\5bc730cc1b673.png)
 
@@ -621,7 +621,7 @@ $$
 
 ![28.png](media\Chapter6_支持向量机\5bc730ccce68e.png)
 
-为了解决这一问题，我们需要允许某一些数据点不满足约束，即可以在一定程度上偏移超平面，同时使得不满足约束的数据点尽可能少，这便引出了**“软间隔”支持向量机**的概念。
+为了解决这一问题，我们需要允许某一些数据点不满足约束，即可以在一定程度上偏移超平面，同时使得不满足约束的数据点尽可能少，这便引出了**"软间隔"支持向量机**的概念。
 
 hard margin 式6.6
 $$
@@ -641,13 +641,13 @@ $$
 \end{array}\right.
 \end{array}
 $$
-如同阶跃函数，0/1损失函数虽然表示效果最好，但是数学性质不佳，不容易被微分。因此常用其它函数作为“替代损失函数surrogate loss function”，他们都是凸的连续函数，且是0/1损失函数的上界。
+如同阶跃函数，0/1损失函数虽然表示效果最好，但是数学性质不佳，不容易被微分。因此常用其它函数作为"替代损失函数surrogate loss function"，他们都是凸的连续函数，且是0/1损失函数的上界。
 
 <img src="media\Chapter6_支持向量机\5bc730cc5e5a9.png" alt="30.png" style="zoom: 80%;" />
 
 ![image-20200829191800395](media\Chapter6_支持向量机\image-20200829191800395.png)
 
-soft-margin 式**6.35**。支持向量机中的损失函数为**hinge损失**，引入**“松弛变量”**，目标函数与约束条件可以改写为 
+soft-margin 式**6.35**。支持向量机中的损失函数为**hinge损失**，引入**"松弛变量"**，目标函数与约束条件可以改写为
 
 ![31.png](media\Chapter6_支持向量机\5bc7317aa3411.png)
 
@@ -751,7 +751,7 @@ $$
 
 ![image-20200829181728380](media\Chapter6_支持向量机\image-20200829181728380.png)
 
-将“软间隔”下产生的对偶问题与原对偶问题对比可以发现：新的对偶问题只是约束条件中的α多出了一个上限C，其它的完全相同，因此在引入核函数处理线性不可分问题时，便能使用与“硬间隔”支持向量机完全相同的方法。
+将"软间隔"下产生的对偶问题与原对偶问题对比可以发现：新的对偶问题只是约束条件中的α多出了一个上限C，其它的完全相同，因此在引入核函数处理线性不可分问题时，便能使用与"硬间隔"支持向量机完全相同的方法。
 
 ## 6.5 SVR回归
 
@@ -955,28 +955,28 @@ $$
 
 $$
 \mathbf{K}=\left[ \begin{array}{cccc}
-\kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_1\right) & \kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_2\right) & \kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_3\right) & \kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_4\right)\\ 
-\kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_1\right) & \kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_2\right) & \kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_3\right) & \kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_4\right)\\ 
-\kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_1\right) & \kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_2\right) & \kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_3\right) & \kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_4\right)\\ 
-\kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_1\right) & \kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_2\right) & \kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_3\right) & \kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_4\right)\\ 
+\kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_1\right) & \kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_2\right) & \kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_3\right) & \kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_4\right)\\
+\kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_1\right) & \kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_2\right) & \kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_3\right) & \kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_4\right)\\
+\kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_1\right) & \kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_2\right) & \kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_3\right) & \kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_4\right)\\
+\kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_1\right) & \kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_2\right) & \kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_3\right) & \kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_4\right)\\
 \end{array} \right]\in \mathbb{R}^{4\times 4}
 $$
 
 $$
 \mathbf{1}_{0}=\left[ \begin{array}{c}
-1\\ 
-0\\ 
-1\\ 
-0\\ 
+1\\
+0\\
+1\\
+0\\
 \end{array} \right]\in \mathbb{R}^{4\times 1}
 $$
 
 $$
 \mathbf{1}_{1}=\left[ \begin{array}{c}
-0\\ 
-1\\ 
-0\\ 
-1\\ 
+0\\
+1\\
+0\\
+1\\
 \end{array} \right]\in \mathbb{R}^{4\times 1}
 $$
 
@@ -984,38 +984,38 @@ $$
 所以
 $$
 \hat{\boldsymbol{\mu}}_{0}=\frac{1}{m_{0}} \mathbf{K} \mathbf{1}_{0}=\frac{1}{2}\left[ \begin{array}{c}
-\kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_1\right)+\kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_3\right)\\ 
-\kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_1\right)+\kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_3\right)\\ 
-\kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_1\right)+\kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_3\right)\\ 
-\kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_1\right)+\kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_3\right)\\ 
+\kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_1\right)+\kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_3\right)\\
+\kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_1\right)+\kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_3\right)\\
+\kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_1\right)+\kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_3\right)\\
+\kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_1\right)+\kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_3\right)\\
 \end{array} \right]\in \mathbb{R}^{4\times 1}
 $$
 
 $$
 \hat{\boldsymbol{\mu}}_{1}=\frac{1}{m_{1}} \mathbf{K} \mathbf{1}_{1}=\frac{1}{2}\left[ \begin{array}{c}
-\kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_2\right)+\kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_4\right)\\ 
-\kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_2\right)+\kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_4\right)\\ 
-\kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_2\right)+\kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_4\right)\\ 
-\kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_2\right)+\kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_4\right)\\ 
+\kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_2\right)+\kappa\left(\boldsymbol{x}_1, \boldsymbol{x}_4\right)\\
+\kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_2\right)+\kappa\left(\boldsymbol{x}_2, \boldsymbol{x}_4\right)\\
+\kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_2\right)+\kappa\left(\boldsymbol{x}_3, \boldsymbol{x}_4\right)\\
+\kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_2\right)+\kappa\left(\boldsymbol{x}_4, \boldsymbol{x}_4\right)\\
 \end{array} \right]\in \mathbb{R}^{4\times 1}
 $$
 
 根据此结果易得$\hat{\boldsymbol{\mu}}_{0},\hat{\boldsymbol{\mu}}_{1}$的一般形式为
 $$
 \hat{\boldsymbol{\mu}}_{0}=\frac{1}{m_{0}} \mathbf{K} \mathbf{1}_{0}=\frac{1}{m_{0}}\left[ \begin{array}{c}
-\sum_{\boldsymbol{x} \in X_{0}}\kappa\left(\boldsymbol{x}_1, \boldsymbol{x}\right)\\ 
-\sum_{\boldsymbol{x} \in X_{0}}\kappa\left(\boldsymbol{x}_2, \boldsymbol{x}\right)\\ 
-\vdots\\ 
-\sum_{\boldsymbol{x} \in X_{0}}\kappa\left(\boldsymbol{x}_m, \boldsymbol{x}\right)\\ 
+\sum_{\boldsymbol{x} \in X_{0}}\kappa\left(\boldsymbol{x}_1, \boldsymbol{x}\right)\\
+\sum_{\boldsymbol{x} \in X_{0}}\kappa\left(\boldsymbol{x}_2, \boldsymbol{x}\right)\\
+\vdots\\
+\sum_{\boldsymbol{x} \in X_{0}}\kappa\left(\boldsymbol{x}_m, \boldsymbol{x}\right)\\
 \end{array} \right]\in \mathbb{R}^{m\times 1}
 $$
 
 $$
 \hat{\boldsymbol{\mu}}_{1}=\frac{1}{m_{1}} \mathbf{K} \mathbf{1}_{1}=\frac{1}{m_{1}}\left[ \begin{array}{c}
-\sum_{\boldsymbol{x} \in X_{1}}\kappa\left(\boldsymbol{x}_1, \boldsymbol{x}\right)\\ 
-\sum_{\boldsymbol{x} \in X_{1}}\kappa\left(\boldsymbol{x}_2, \boldsymbol{x}\right)\\ 
-\vdots\\ 
-\sum_{\boldsymbol{x} \in X_{1}}\kappa\left(\boldsymbol{x}_m, \boldsymbol{x}\right)\\ 
+\sum_{\boldsymbol{x} \in X_{1}}\kappa\left(\boldsymbol{x}_1, \boldsymbol{x}\right)\\
+\sum_{\boldsymbol{x} \in X_{1}}\kappa\left(\boldsymbol{x}_2, \boldsymbol{x}\right)\\
+\vdots\\
+\sum_{\boldsymbol{x} \in X_{1}}\kappa\left(\boldsymbol{x}_m, \boldsymbol{x}\right)\\
 \end{array} \right]\in \mathbb{R}^{m\times 1}
 $$
 
@@ -1136,9 +1136,3 @@ $$
 &=\boldsymbol{\alpha}^{\mathrm{T}} \mathbf{N}\boldsymbol{\alpha}\\
 \end{aligned}
 $$
-
-
-
-
-
-
