@@ -9,13 +9,13 @@ from utils import *
 from md_manager.imgpath_corrector import main as imgpath_corrector
 
 
-def renamer(file_path, new_name, leave_old_file):
+def renamer(file_path, new_name, output_folder, leave_old_file):
     filerfolder = osp.dirname(file_path)
     if leave_old_file:
         shutil.copy(file_path, osp.join(filerfolder, new_name))
     else:
         os.rename(file_path, osp.join(filerfolder, new_name))
-    imgpath_corrector(input_folder=filerfolder, output_folder=filerfolder + "_bak")
+    imgpath_corrector(input_folder=filerfolder, output_folder=output_folder)
 
 
 if __name__ == "__main__":
@@ -34,7 +34,10 @@ if __name__ == "__main__":
     parser.add_argument(
         "--leave_old_file",
         action="store_false",
-        default="cba.md",
+    )
+    parser.add_argument(
+        "--output_folder",
+        type=str,
     )
     args = parser.parse_args()
-    renamer(args.file_path, args.new_name, args.leave_old_file)
+    renamer(args.file_path, args.new_name, args.output_folder, args.leave_old_file)
