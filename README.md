@@ -1,2 +1,3 @@
-# file_management
-some useful scripts for note related file management
+# NoteMage
+
+This is a collection of useful commands for note management.
