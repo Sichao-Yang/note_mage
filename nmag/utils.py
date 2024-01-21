@@ -1,6 +1,9 @@
+import shutil
+import os
 import logging
+from os import path as osp
 
-
+ROOT = osp.abspath(osp.join(osp.dirname(__file__), "../"))
 IMGPATTERNS = ["\!\[.*?\]\((.*?)\)", "\<img src=[\"'](.*?)[\"']"]
 
 
@@ -25,3 +28,17 @@ def get_logger(filename, verb_level="info", name=None, method=None):
     logger.addHandler(sh)
 
     return logger
+
+
+def build_workdir(path=""):
+    if path == "":
+        logging.info("build workdir from $ROOT")
+        path = osp.join(ROOT, "workdir")
+    if osp.exists(path):
+        shutil.rmtree(path)
+    os.makedirs(path)
+    return path
+
+
+def remove_workdir(path):
+    shutil.rmtree(path)

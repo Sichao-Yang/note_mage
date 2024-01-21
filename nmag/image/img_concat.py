@@ -6,7 +6,7 @@ from os import path as osp
 import sys
 from pprint import pformat
 
-sys.path.append(osp.abspath(osp.dirname(__file__)))
+sys.path.append(osp.abspath(osp.join(osp.dirname(__file__), "../")))
 from utils import *
 
 
@@ -62,6 +62,31 @@ def concate_to_pdf(images, file_path="out.pdf"):
     begin.save(file_path, save_all=True, append_images=imgs)
 
 
+def main(input_folder, concat_direction, out_path):
+    supported_img_format = [".jpg", ".png"]
+
+    filelist = [
+        osp.join(input_folder, x)
+        for x in sorted(os.listdir(input_folder))
+        if Path(x).suffix in supported_img_format
+    ]
+    logging.info(
+        f"Found {len(filelist)} images from {input_folder}:\n{pformat(filelist)}"
+    )
+    images = [Image.open(x) for x in filelist]
+
+    assert concat_direction in ["h", "v"], "unsupported concat direction!"
+    if Path(out_path).suffix in supported_img_format:
+        logging.info(f"concat images to a full image on {concat_direction} direction")
+        concate_imgs(resize_all(images), direction=concat_direction, file_path=out_path)
+    elif Path(out_path).suffix == ".pdf":
+        logging.info(f"concat images to pdf on {concat_direction} direction")
+        concate_to_pdf(resize_all(images), file_path=out_path)
+    else:
+        raise ValueError(f"unsupported output format! {out_path}")
+    logging.info(f"Done.\nSaved concated image to {out_path}")
+
+
 if __name__ == "__main__":
     logger = get_logger(filename="imgcat.log", verb_level="info", method="w2file")
     parser = argparse.ArgumentParser()
@@ -87,30 +112,4 @@ if __name__ == "__main__":
         "-v", "--verbose", action="store_true", help="increase output verbosity"
     )
     args = parser.parse_args()
-
-    supported_img_format = [".jpg", ".png"]
-
-    filelist = [
-        osp.join(args.input_folder, x)
-        for x in sorted(os.listdir(args.input_folder))
-        if Path(x).suffix in supported_img_format
-    ]
-    logging.info(
-        f"Found {len(filelist)} images from {args.input_folder}:\n{pformat(filelist)}"
-    )
-    images = [Image.open(x) for x in filelist]
-
-    assert args.concat_direction in ["h", "v"], "unsupported concat direction!"
-    if Path(args.out_path).suffix in supported_img_format:
-        logging.info(
-            f"concat images to a full image on {args.concat_direction} direction"
-        )
-        concate_imgs(
-            resize_all(images), direction=args.concat_direction, file_path=args.out_path
-        )
-    elif Path(args.out_path).suffix == ".pdf":
-        logging.info(f"concat images to pdf on {args.concat_direction} direction")
-        concate_to_pdf(resize_all(images), file_path=args.out_path)
-    else:
-        raise ValueError(f"unsupported output format! {args.out_path}")
-    logging.info(f"Done.\nSaved concated image to {args.out_path}")
+    main(args.input_folder, args.concat_direction, args.out_path)

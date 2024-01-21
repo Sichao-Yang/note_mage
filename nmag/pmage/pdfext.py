@@ -7,7 +7,7 @@ sys.path.append(osp.abspath(osp.join(osp.dirname(__file__), "../")))
 from utils import *
 
 
-def pdf_split(pdf_in, pdf_out, start, end):
+def pdf_extract(pdf_in, pdf_out, start, end):
     writer = PdfWriter()
     # 读取pdf
     reader = PdfReader(pdf_in)
@@ -40,4 +40,4 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     rangelist = eval(args.range)
-    pdf_split(args.in_path, args.out_path, rangelist[0], rangelist[1])
+    pdf_extract(args.in_path, args.out_path, rangelist[0], rangelist[1])

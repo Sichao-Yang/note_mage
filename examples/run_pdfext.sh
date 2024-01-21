@@ -1,3 +1,3 @@
 #!/bin/bash
 cd ..
-python nmag/pdf_manager/pdfext.py --in_path examples/pdfext/NumericalOptimization.pdf --out_path examples/pdfext/o.pdf
+python nmag/pmage/pdfext.py --in_path examples/pdfs/OR2_03_BnBandHeuristic.pdf --out_path examples/pdfs/OR2_03_BnBandHeuristic_.pdf --range "[0, 15]"

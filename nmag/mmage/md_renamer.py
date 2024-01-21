@@ -6,7 +6,7 @@ import shutil
 
 sys.path.append(osp.abspath(osp.join(osp.dirname(__file__), "../")))
 from utils import *
-from md_manager.imgpath_corrector import main as imgpath_corrector
+from mmage.imgpath_corrector import main as imgpath_corrector
 
 
 def renamer(file_path, new_name, output_folder, leave_old_file):

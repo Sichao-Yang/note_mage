@@ -8,7 +8,7 @@ sys.path.append(osp.abspath(osp.join(osp.dirname(__file__), "../")))
 from utils import *
 
 
-def main(input_path, output_folder):
+def pdf_to_img(input_path, output_folder):
     images = convert_from_path(input_path)
 
     if not osp.exists(output_folder):
@@ -34,4 +34,4 @@ if __name__ == "__main__":
         default="examples/pdf2img/OR2_03_BnBandHeuristic",
     )
     args = parser.parse_args()
-    main(args.input_path, args.output_folder)
+    pdf_to_img(args.input_path, args.output_folder)
