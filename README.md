@@ -1,6 +1,11 @@
+<h1 align="center">
+<img src="docs/logo.jpg" width="300">
+</h1><br>
+
 # NoteMage
 
 This is a collection of useful commands for note management.
+
 
 # Quick Start
 
