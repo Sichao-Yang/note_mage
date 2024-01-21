@@ -12,7 +12,7 @@ from nmag.mmage.red_img_remover import MdRedImgRemover
 from nmag.pmage.pdf2img import pdf_to_img
 from nmag.pmage.pdf2md import pdf_to_md, pdf_to_md_batch
 from nmag.pmage.pdfext import pdf_extract
-from nmag.utils import *
+from nmag.utils import get_logger
 
 
 def get_args():
@@ -80,7 +80,7 @@ def get_args():
 
 
 def run():
-    # logger = get_logger(filename="imgcat.log", verb_level="info", method="w2file")
+    get_logger(filename="cli.log", verb_level="info")
     args = get_args()
 
     if args.src_dir != "" and args.src_path != "":
@@ -123,4 +123,5 @@ def run():
         pdf_extract(args.src_path, args.dst_path, rangelist[0], rangelist[1])
 
 
-run()
+if __name__ == "__main__":
+    run()

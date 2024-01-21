@@ -52,37 +52,39 @@ def correct_imgpath(src_path, backup=True):
     title = osp.basename(src_path)[:-3]  # remove '.md' part of file name to get title
     new_lines = copy.deepcopy(lines)
     copied_list = []
+    error_path_count = 0
     # read the md file line by line to extract image path
     for lineno, line in enumerate(lines):
-        for p in IMGPATTERNS:
-            res = re.findall(pattern=p, string=line)
-            if len(res) == 1:
-                pic_path = res[0]
-                # only make img folder when md file contains img
-                os.makedirs(osp.join(md_dir, f"media/{title}"), exist_ok=True)
-                # if img_path exists and its not url, we continue to check if img_path is correct
-                if check_path(pic_path):
-                    logging.warn(
-                        f"Found error path!\n>>>FileName: {title}, LineNo: {lineno}"
-                    )
-                    continue
-                if not osp.isabs(pic_path):
-                    pic_path_abs = osp.join(md_dir, osp.relpath(pic_path))
-                new_pic_path = path_correction(title, pic_path_abs, md_dir)
-                if new_pic_path != "":
-                    # move picture to the corrected path and add it to moved_list to avoid any future move
-                    if pic_path_abs not in copied_list:
-                        if not osp.exists(pic_path_abs):
-                            logging.error(
-                                f"Referred imgpath doesn't exsits!\n>>>{src_path}\n>>>{lineno}\n>>>{pic_path_abs}"
-                            )
-                            continue
-                        shutil.copy(src=pic_path_abs, dst=new_pic_path)
-                        copied_list.append(pic_path_abs)
-                    # change content in md file lines
-                    relative_new_pic_path = osp.relpath(new_pic_path, md_dir)
-                    new_lines[lineno] = line.replace(pic_path, relative_new_pic_path)
-                break
+        matched_paths = ext_path(line, IMGPATTERNS)
+        if len(matched_paths) == 1:
+            pic_path = matched_paths[0]
+            # only make img folder when md file contains img
+            os.makedirs(osp.join(md_dir, f"media/{title}"), exist_ok=True)
+            # if img_path exists and its not url, we continue to check if img_path is correct
+            if check_path(pic_path):
+                logging.warn(
+                    f"Found error path!\n>>>FileName: {title}, LineNo: {lineno}"
+                )
+                continue
+            if not osp.isabs(pic_path):
+                pic_path_abs = osp.join(md_dir, osp.relpath(pic_path))
+            new_pic_path = path_correction(title, pic_path_abs, md_dir)
+            if new_pic_path != "":
+                # move picture to the corrected path and add it to moved_list to avoid any future move
+                if pic_path_abs not in copied_list:
+                    if not osp.exists(pic_path_abs):
+                        logging.error(
+                            f"Referred imgpath doesn't exsits!\n>>>SrcPath: {src_path}\n>>>LineNo: {lineno}\n>>>ReferredPath: {pic_path_abs}"
+                        )
+                        error_path_count += 1
+                        continue
+                    shutil.copy(src=pic_path_abs, dst=new_pic_path)
+                    copied_list.append(pic_path_abs)
+                # change content in md file lines
+                relative_new_pic_path = osp.relpath(new_pic_path, md_dir)
+                new_lines[lineno] = line.replace(pic_path, relative_new_pic_path)
+    if error_path_count != 0:
+        logging.warn(f"Total error referred_path count: {error_path_count}")
     writeback(src_path, new_lines)
     # if md file contains imgs return artifacts' folder
     if osp.exists(osp.join(md_dir, f"media/{title}")):

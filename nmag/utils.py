@@ -84,3 +84,10 @@ def check_path(filepath):
         logging.warn(f"AbsolutePath detected in filepath: {filepath}")
         return True
     return False
+
+
+def ext_path(string, pats):
+    res = []
+    for p in pats:
+        res.extend(re.findall(p, string))
+    return res

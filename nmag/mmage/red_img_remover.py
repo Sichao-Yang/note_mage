@@ -40,13 +40,6 @@ def check_files(filelist, warn_fmt=[".md", ".pdf"]):
                 )
 
 
-def ext_path(string, pats):
-    res = []
-    for p in pats:
-        res.extend(re.findall(p, string))
-    return res
-
-
 def get_red_paths(all_imgpaths, used_imgpaths):
     red_paths = all_imgpaths.copy()
     for p in used_imgpaths:

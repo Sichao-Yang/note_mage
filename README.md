@@ -32,6 +32,4 @@ It runs with python 3.x, no dependent libs needed.
 
 # Todo List
 
-1. add more feature tests
-2. add a common frontend (cli) to all features
-3. add a workdir mechanism
+1. add more documentation
