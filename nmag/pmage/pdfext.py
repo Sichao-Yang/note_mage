@@ -24,12 +24,12 @@ if __name__ == "__main__":
     logger = get_logger(filename="pdfext.log", verb_level="info", method="w2file")
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--in_path",
+        "--src_path",
         type=str,
         default=r"examples\pdfext\NumericalOptimization.pdf",
     )
     parser.add_argument(
-        "--out_path",
+        "--dst_path",
         type=str,
         default=r"examples\pdfext\out.pdf",
     )
@@ -40,4 +40,4 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     rangelist = eval(args.range)
-    pdf_extract(args.in_path, args.out_path, rangelist[0], rangelist[1])
+    pdf_extract(args.src_path, args.dst_path, rangelist[0], rangelist[1])

@@ -2,4 +2,4 @@
 indir=examples/redundant_img_remove
 outdir=examples/redundant_img_remove_new
 cd ..
-python nmag/mmage/redundant_img_remover.py --input_folder $indir --ignore_formats pdf txt --output_folder $outdir
+python nmag/mmage/red_img_remover.py --src_dir $indir --ignore_items pdf txt --dst_dir $outdir

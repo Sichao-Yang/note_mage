@@ -12,14 +12,6 @@ sys.path.append(osp.abspath(osp.join(osp.dirname(__file__), "../")))
 from utils import *
 
 
-def is_string_url(s):
-    identifiers = ["https://", "http://"]
-    for iden in identifiers:
-        if iden in s:
-            return True
-    return False
-
-
 def writeback(f_path, new_lines):
     with open(f_path, "w", encoding="utf8") as fp:
         fp.writelines(new_lines)
@@ -34,64 +26,69 @@ def path_correction(fn, pic_path_abs, md_dir):
     return new_pic_path
 
 
-def main(input_folder, output_folder):
-    """
-    move all img files with non-standard relative path into media/<file name>/ folder
-    """
-    if input_folder == output_folder:
-        raise ValueError(
-            "output folder should not be the same as input folder, otherwise data in input folder will be deleted!"
-        )
-    if osp.exists(output_folder):
-        shutil.rmtree(output_folder)
-    os.makedirs(output_folder)
-    shutil.copytree(src=input_folder, dst=output_folder, dirs_exist_ok=True)
-    # working only on output folder
-    md_files = [
-        osp.join(output_folder, x) for x in os.listdir(output_folder) if ".md" in x
-    ]
+def correct_imgpath_batch(src_dir, backup=True):
+    md_pathlist = [osp.join(src_dir, x) for x in os.listdir(src_dir) if ".md" in x]
     logging.info(
-        f"Found {len(md_files)} markdown files from {input_folder}:\n{pformat(md_files)}"
+        f"Found {len(md_pathlist)} markdown files from {src_dir}:\n{pformat(md_pathlist)}"
     )
-    global IMGPATTERNS
-    compiled_p = [re.compile(y) for y in IMGPATTERNS]
-    for f_path in md_files:
-        logging.info(f">>> working on {f_path}")
-        with open(f_path, "r", encoding="utf8") as fp:
-            lines = fp.readlines()
-        md_dir = osp.dirname(f_path)
-        fn = osp.basename(f_path)[:-3]  # remove '.md' part of file name
-        new_lines = copy.deepcopy(lines)
-        moved_list = []
-        # read the md file line by line to extract image path
-        for lineno, line in enumerate(lines):
-            for p in compiled_p:
-                res = re.findall(pattern=p, string=line)
-                if len(res) != 0:
-                    pic_path = res[0]
-                    # only make img folder when md file contains img
-                    os.makedirs(osp.join(md_dir, f"media/{fn}"), exist_ok=True)
-                    # if img_path exists and its not url, we continue to check if img_path is correct
-                    if is_string_url(pic_path):
-                        logging.warning(
-                            f"Found url path!\n>>>FileName: {fn}, LineNo: {lineno}, ImagePath: {pic_path}"
-                        )
-                        continue
-                    if not osp.isabs(pic_path):
-                        pic_path_abs = osp.join(md_dir, osp.relpath(pic_path))
-                    new_pic_path = path_correction(fn, pic_path_abs, md_dir)
-                    if new_pic_path != "":
-                        # move picture to the corrected path and add it to moved_list to avoid any future move
-                        if pic_path_abs not in moved_list:
-                            shutil.move(src=pic_path_abs, dst=new_pic_path)
-                            moved_list.append(pic_path_abs)
-                        # change content in md file lines
-                        relative_new_pic_path = osp.relpath(new_pic_path, md_dir)
-                        new_lines[lineno] = line.replace(
-                            pic_path, relative_new_pic_path
-                        )
-                    break
-        writeback(f_path, new_lines)
+    art_dirs = []
+    for src_path in md_pathlist:
+        art_dirs.append(correct_imgpath(src_path, backup))
+    return md_pathlist, art_dirs
+
+
+def correct_imgpath(src_path, backup=True):
+    """
+    standardieze imgpath in markdown file, and copy all img sources into standard folder: media/<file name>/
+    """
+    # backup only the markdown file
+    if backup:
+        backup_file(src_path)
+
+    logging.info(f">>> working on {src_path}")
+    with open(src_path, "r", encoding="utf8") as fp:
+        lines = fp.readlines()
+    md_dir = osp.dirname(src_path)
+    title = osp.basename(src_path)[:-3]  # remove '.md' part of file name to get title
+    new_lines = copy.deepcopy(lines)
+    copied_list = []
+    # read the md file line by line to extract image path
+    for lineno, line in enumerate(lines):
+        for p in IMGPATTERNS:
+            res = re.findall(pattern=p, string=line)
+            if len(res) == 1:
+                pic_path = res[0]
+                # only make img folder when md file contains img
+                os.makedirs(osp.join(md_dir, f"media/{title}"), exist_ok=True)
+                # if img_path exists and its not url, we continue to check if img_path is correct
+                if check_path(pic_path):
+                    logging.warn(
+                        f"Found error path!\n>>>FileName: {title}, LineNo: {lineno}"
+                    )
+                    continue
+                if not osp.isabs(pic_path):
+                    pic_path_abs = osp.join(md_dir, osp.relpath(pic_path))
+                new_pic_path = path_correction(title, pic_path_abs, md_dir)
+                if new_pic_path != "":
+                    # move picture to the corrected path and add it to moved_list to avoid any future move
+                    if pic_path_abs not in copied_list:
+                        if not osp.exists(pic_path_abs):
+                            logging.error(
+                                f"Referred imgpath doesn't exsits!\n>>>{src_path}\n>>>{lineno}\n>>>{pic_path_abs}"
+                            )
+                            continue
+                        shutil.copy(src=pic_path_abs, dst=new_pic_path)
+                        copied_list.append(pic_path_abs)
+                    # change content in md file lines
+                    relative_new_pic_path = osp.relpath(new_pic_path, md_dir)
+                    new_lines[lineno] = line.replace(pic_path, relative_new_pic_path)
+                break
+    writeback(src_path, new_lines)
+    # if md file contains imgs return artifacts' folder
+    if osp.exists(osp.join(md_dir, f"media/{title}")):
+        return osp.join(md_dir, f"media/{title}")
+    else:
+        return ""
 
 
 if __name__ == "__main__":
@@ -100,16 +97,33 @@ if __name__ == "__main__":
     )
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--input_folder",
+        "--src_dir",
         type=str,
-        default="data",
+        default="",
         help="the folder that contains markdown files",
     )
     parser.add_argument(
-        "--output_folder",
+        "--src_path",
+        type=str,
+        default="",
+    )
+    parser.add_argument(
+        "--dst_dir",
         type=str,
         default="data",
         help="the goto folder for corrected markdown files",
     )
+    parser.add_argument(
+        "--backup",
+        action="store_false",
+        help="backup original md file",
+    )
     args = parser.parse_args()
-    main(args.input_folder, args.output_folder)
+
+    if args.src_dir != "" and args.src_path != "":
+        raise ValueError("You can't set both input filepath and input folder!")
+
+    if args.src_dir != "":
+        correct_imgpath_batch(args.src_dir, args.backup)
+    else:
+        correct_imgpath(args.src_path, args.backup)

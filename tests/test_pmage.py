@@ -13,13 +13,13 @@ import shutil
 from random import randint
 
 
-class TestImgMage(unittest.TestCase):
+class TestPMage(unittest.TestCase):
     def setUp(self):
         self.workdir = build_workdir()
-        self.srcdir = osp.join(self.workdir, "src")
-        shutil.copytree(osp.join(ROOT, r"examples/pdfs"), dst=self.srcdir)
-        filelist = os.listdir(self.srcdir)
-        self.pdf_src = osp.join(self.srcdir, filelist[randint(0, len(filelist) - 1)])
+        self.src_dir = osp.join(self.workdir, "src")
+        shutil.copytree(osp.join(ROOT, r"examples/pdfs"), dst=self.src_dir)
+        filelist = os.listdir(self.src_dir)
+        self.pdf_src = osp.join(self.src_dir, filelist[randint(0, len(filelist) - 1)])
         self.title = osp.basename(self.pdf_src).split(".")[0]
         reader = PdfReader(self.pdf_src)
         self.expect_pages = len(reader.pages)
@@ -28,38 +28,38 @@ class TestImgMage(unittest.TestCase):
         remove_workdir(self.workdir)
 
     def test_to_img(self):
-        output_folder = osp.join(self.workdir, "out")
-        pdf_to_img(self.pdf_src, output_folder)
-        self.assertTrue(osp.exists(output_folder))
-        self.assertEqual(len(os.listdir(output_folder)), self.expect_pages)
+        dst_dir = osp.join(self.workdir, "out")
+        pdf_to_img(self.pdf_src, dst_dir)
+        self.assertTrue(osp.exists(dst_dir))
+        self.assertEqual(len(os.listdir(dst_dir)), self.expect_pages)
 
     def test_to_md(self):
-        output_folder = osp.join(self.workdir)
-        outpath = pdf_to_md(self.pdf_src, output_folder)
+        dst_dir = osp.join(self.workdir)
+        outpath = pdf_to_md(self.pdf_src, dst_dir)
         self.assertTrue(osp.exists(outpath))
         art_dir = osp.join(self.workdir, f"media/{self.title}")
         self.assertEqual(len(os.listdir(art_dir)), self.expect_pages)
 
     def test_to_md_batch(self):
-        output_folder = osp.join(self.workdir, "out")
-        pdf_to_md_batch(self.srcdir, output_folder)
-        self.assertTrue(osp.exists(output_folder))
-        for src in os.listdir(self.srcdir):
+        dst_dir = osp.join(self.workdir, "out")
+        pdf_to_md_batch(self.src_dir, dst_dir)
+        self.assertTrue(osp.exists(dst_dir))
+        for src in os.listdir(self.src_dir):
             title = osp.basename(src).split(".")[0]
-            art_dir = osp.join(output_folder, f"media/{title}")
+            art_dir = osp.join(dst_dir, f"media/{title}")
             self.assertTrue(len(os.listdir(art_dir)) != 0)
 
     def test_pdf_extract(self):
         rangelist = [3, 5]
-        out_path = osp.join(self.workdir, self.title + ".pdf")
-        pdf_extract(self.pdf_src, out_path, rangelist[0], rangelist[1])
-        self.assertTrue(osp.exists(out_path))
-        reader = PdfReader(out_path)
+        dst_path = osp.join(self.workdir, self.title + ".pdf")
+        pdf_extract(self.pdf_src, dst_path, rangelist[0], rangelist[1])
+        self.assertTrue(osp.exists(dst_path))
+        reader = PdfReader(dst_path)
         self.assertEqual(len(reader.pages), 2)
 
 
 if __name__ == "__main__":
     loader = unittest.TestLoader()
-    suite = loader.loadTestsFromTestCase(TestImgMage)
+    suite = loader.loadTestsFromTestCase(TestPMage)
     runner = unittest.TextTestRunner()
     runner.run(suite)

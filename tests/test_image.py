@@ -11,7 +11,7 @@ from pathlib import Path
 from PIL import Image
 
 
-class TestImgMage(unittest.TestCase):
+class TestIMage(unittest.TestCase):
     def setUp(self):
         self.workdir = build_workdir()
         src = osp.join(ROOT, r"examples\img_concat")
@@ -31,21 +31,21 @@ class TestImgMage(unittest.TestCase):
         remove_workdir(self.workdir)
 
     def test_imgconcat_img(self):
-        out_path = osp.join(self.workdir, "o.png")
+        dst_path = osp.join(self.workdir, "o.png")
         concat_direction = "h"
         concate_imgs(
-            resize_all(self.images), direction=concat_direction, file_path=out_path
+            resize_all(self.images), direction=concat_direction, file_path=dst_path
         )
-        self.assertTrue(osp.exists(out_path))
+        self.assertTrue(osp.exists(dst_path))
 
     def test_imgconcat_pdf(self):
-        out_path = osp.join(self.workdir, "o.pdf")
-        concate_to_pdf(resize_all(self.images), file_path=out_path)
-        self.assertTrue(osp.exists(out_path))
+        dst_path = osp.join(self.workdir, "o.pdf")
+        concate_to_pdf(resize_all(self.images), file_path=dst_path)
+        self.assertTrue(osp.exists(dst_path))
 
 
 if __name__ == "__main__":
     loader = unittest.TestLoader()
-    suite = loader.loadTestsFromTestCase(TestImgMage)
+    suite = loader.loadTestsFromTestCase(TestIMage)
     runner = unittest.TextTestRunner()
     runner.run(suite)

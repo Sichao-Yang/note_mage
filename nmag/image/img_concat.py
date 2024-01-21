@@ -62,42 +62,40 @@ def concate_to_pdf(images, file_path="out.pdf"):
     begin.save(file_path, save_all=True, append_images=imgs)
 
 
-def main(input_folder, concat_direction, out_path):
+def main(src_dir, concat_direction, dst_path):
     supported_img_format = [".jpg", ".png"]
 
     filelist = [
-        osp.join(input_folder, x)
-        for x in sorted(os.listdir(input_folder))
+        osp.join(src_dir, x)
+        for x in sorted(os.listdir(src_dir))
         if Path(x).suffix in supported_img_format
     ]
-    logging.info(
-        f"Found {len(filelist)} images from {input_folder}:\n{pformat(filelist)}"
-    )
+    logging.info(f"Found {len(filelist)} images from {src_dir}:\n{pformat(filelist)}")
     images = [Image.open(x) for x in filelist]
 
     assert concat_direction in ["h", "v"], "unsupported concat direction!"
-    if Path(out_path).suffix in supported_img_format:
+    if Path(dst_path).suffix in supported_img_format:
         logging.info(f"concat images to a full image on {concat_direction} direction")
-        concate_imgs(resize_all(images), direction=concat_direction, file_path=out_path)
-    elif Path(out_path).suffix == ".pdf":
+        concate_imgs(resize_all(images), direction=concat_direction, file_path=dst_path)
+    elif Path(dst_path).suffix == ".pdf":
         logging.info(f"concat images to pdf on {concat_direction} direction")
-        concate_to_pdf(resize_all(images), file_path=out_path)
+        concate_to_pdf(resize_all(images), file_path=dst_path)
     else:
-        raise ValueError(f"unsupported output format! {out_path}")
-    logging.info(f"Done.\nSaved concated image to {out_path}")
+        raise ValueError(f"unsupported output format! {dst_path}")
+    logging.info(f"Done.\nSaved concated image to {dst_path}")
 
 
 if __name__ == "__main__":
     logger = get_logger(filename="imgcat.log", verb_level="info", method="w2file")
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--input_folder",
+        "--src_dir",
         type=str,
         default="examples/img_concat",
         help="the folder that contains images",
     )
     parser.add_argument(
-        "--out_path",
+        "--dst_path",
         type=str,
         default="examples/img_concat.png",
         help="the output path for concatenated images",
@@ -112,4 +110,4 @@ if __name__ == "__main__":
         "-v", "--verbose", action="store_true", help="increase output verbosity"
     )
     args = parser.parse_args()
-    main(args.input_folder, args.concat_direction, args.out_path)
+    main(args.src_dir, args.concat_direction, args.dst_path)

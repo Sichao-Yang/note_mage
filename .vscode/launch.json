@@ -11,7 +11,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": false,
-            // "args": ["--ignore_formats", "pdf", "txt"]
+            // "args": ["--ignore_items", "pdf", "txt"]
         }
     ]
 }

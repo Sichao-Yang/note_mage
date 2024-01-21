@@ -6,7 +6,7 @@ This is a collection of useful commands for note management.
 
 # Dive Deeper
 
-## md_redundant_img_remover
+## md_red_img_remover
 
 It works with `typora` markdown file by collecting all redundant image files into a folder named 'red_files' for manual check & removal.
 
