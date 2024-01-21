@@ -7,6 +7,7 @@ import re
 ROOT = osp.abspath(osp.join(osp.dirname(__file__), "../"))
 pats = ["\!\[.*?\]\((.*?)\)", "\<img src=[\"'](.*?)[\"']"]
 IMGPATTERNS = [re.compile(y) for y in pats]
+IMGFORMAT = [".jpg", ".png"]
 
 
 def get_logger(filename, verb_level="info", name=None, method=None):

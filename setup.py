@@ -12,7 +12,7 @@ packages = [x.strip() for x in packages]
 
 setup(
     name="nmag",
-    version="0.1.0",
+    version="0.2.1",
     author="sichaoy",
     author_email="sichao.young@gmail.com",
     license="MIT Licence",

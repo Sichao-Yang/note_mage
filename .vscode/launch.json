@@ -11,7 +11,21 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": false,
-            // "args": ["--ignore_items", "pdf", "txt"]
+            // "args": [
+            //     "icat",
+            //     "--src_dir",
+            //     "examples/img_concat",
+            //     "--dst_path",
+            //     "examples/img_concat.png"
+            // ]
+            // "args": [
+            //     "cip",
+            //     "--src_path",
+            //     "examples/mds/DimensionReduction.md",
+            // ]
+            "args": [
+                "-h",
+            ]
         }
     ]
 }

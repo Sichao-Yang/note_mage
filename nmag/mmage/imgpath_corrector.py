@@ -108,12 +108,6 @@ if __name__ == "__main__":
         default="",
     )
     parser.add_argument(
-        "--dst_dir",
-        type=str,
-        default="data",
-        help="the goto folder for corrected markdown files",
-    )
-    parser.add_argument(
         "--backup",
         action="store_false",
         help="backup original md file",

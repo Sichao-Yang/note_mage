@@ -3,14 +3,14 @@ import unittest
 import sys
 from os import path as osp
 from pypdf import PdfReader
+import shutil
+from random import randint
 
 sys.path.append(osp.abspath(osp.join(osp.dirname(__file__), "../")))
 from nmag.utils import build_workdir, remove_workdir, ROOT
 from nmag.pmage.pdf2img import pdf_to_img
 from nmag.pmage.pdf2md import pdf_to_md, pdf_to_md_batch
 from nmag.pmage.pdfext import pdf_extract
-import shutil
-from random import randint
 
 
 class TestPMage(unittest.TestCase):

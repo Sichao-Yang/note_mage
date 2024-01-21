@@ -5,7 +5,7 @@ from os import path as osp
 import shutil
 
 sys.path.append(osp.abspath(osp.join(osp.dirname(__file__), "../")))
-from nmag.utils import build_workdir, remove_workdir, ROOT
+from nmag.utils import build_workdir, remove_workdir, ROOT, IMGFORMAT
 from nmag.image.img_concat import concate_to_pdf, concate_imgs, resize_all
 from pathlib import Path
 from PIL import Image
@@ -18,12 +18,10 @@ class TestIMage(unittest.TestCase):
         img_src = osp.join(self.workdir, "src")
         shutil.copytree(src, dst=img_src)
 
-        self.supported_img_format = [".jpg", ".png"]
-
         filelist = [
             osp.join(img_src, x)
             for x in sorted(os.listdir(img_src))
-            if Path(x).suffix in self.supported_img_format
+            if Path(x).suffix in IMGFORMAT
         ]
         self.images = [Image.open(x) for x in filelist]
 

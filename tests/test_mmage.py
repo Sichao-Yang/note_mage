@@ -48,21 +48,21 @@ class TestMMage(unittest.TestCase):
     def test_mdrename(self):
         src_path = osp.join(self.src_dir, "DimensionReduction.md")
         dst_path = osp.join(self.workdir, "out/out.md")
-        md_rename(src_path, dst_path, leave_old_file=True, auto_imgpath_change=False)
+        md_rename(src_path, dst_path, backup=True, auto_imgpath_change=False)
         self.assertTrue(osp.exists(dst_path))
         self.assertTrue(osp.exists(src_path))
 
     def test_mdrename2(self):
         src_path = osp.join(self.src_dir, "DimensionReduction.md")
         dst_path = osp.join(self.workdir, "out/out.md")
-        md_rename(src_path, dst_path, leave_old_file=False, auto_imgpath_change=False)
+        md_rename(src_path, dst_path, backup=False, auto_imgpath_change=False)
         self.assertTrue(osp.exists(dst_path))
         self.assertTrue(~osp.exists(src_path))
 
     def test_mdrename3(self):
         src_path = osp.join(self.src_dir, "DimensionReduction.md")
         dst_path = osp.join(self.workdir, "out/out.md")
-        md_rename(src_path, dst_path, leave_old_file=True, auto_imgpath_change=True)
+        md_rename(src_path, dst_path, backup=True, auto_imgpath_change=True)
         self.assertTrue(osp.exists(dst_path))
         self.assertTrue(osp.exists(src_path))
         art_dir = osp.join(self.workdir, "out/media/out")

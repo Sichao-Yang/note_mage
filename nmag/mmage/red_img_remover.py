@@ -191,7 +191,7 @@ if __name__ == "__main__":
         "--ignore_items",
         nargs="+",
         help="the folder that contains markdown files",
-        default=[],
+        default=[".pdf", ".txt"],
     )
     args = parser.parse_args()
 

@@ -9,7 +9,7 @@ from utils import *
 from mmage.imgpath_corrector import correct_imgpath
 
 
-def md_rename(src_path, dst_path, leave_old_file, auto_imgpath_change):
+def md_rename(src_path, dst_path, backup, auto_imgpath_change):
     idir = osp.dirname(src_path)
     odir = osp.dirname(dst_path)
     if not osp.exists(odir):
@@ -17,7 +17,7 @@ def md_rename(src_path, dst_path, leave_old_file, auto_imgpath_change):
         os.makedirs(odir)
     # imgpath should be renamed -> corrected -> renamed!
     tmp_path = osp.join(idir, osp.basename(dst_path))
-    if leave_old_file:
+    if backup:
         if osp.basename(dst_path) == osp.basename(src_path):
             raise ValueError(
                 "leave-old-file set to True, new_name should not be same as old name"
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         default="cba.md",
     )
     parser.add_argument(
-        "--leave_old_file",
+        "--backup",
         action="store_false",
     )
     parser.add_argument(
@@ -61,6 +61,6 @@ if __name__ == "__main__":
     md_rename(
         args.src_path,
         args.dst_path,
-        args.leave_old_file,
+        args.backup,
         args.auto_imgpath_change,
     )

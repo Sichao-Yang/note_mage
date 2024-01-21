@@ -62,19 +62,17 @@ def concate_to_pdf(images, file_path="out.pdf"):
     begin.save(file_path, save_all=True, append_images=imgs)
 
 
-def main(src_dir, concat_direction, dst_path):
-    supported_img_format = [".jpg", ".png"]
-
+def concat_img(src_dir, concat_direction, dst_path):
     filelist = [
         osp.join(src_dir, x)
         for x in sorted(os.listdir(src_dir))
-        if Path(x).suffix in supported_img_format
+        if Path(x).suffix in IMGFORMAT
     ]
     logging.info(f"Found {len(filelist)} images from {src_dir}:\n{pformat(filelist)}")
     images = [Image.open(x) for x in filelist]
 
     assert concat_direction in ["h", "v"], "unsupported concat direction!"
-    if Path(dst_path).suffix in supported_img_format:
+    if Path(dst_path).suffix in IMGFORMAT:
         logging.info(f"concat images to a full image on {concat_direction} direction")
         concate_imgs(resize_all(images), direction=concat_direction, file_path=dst_path)
     elif Path(dst_path).suffix == ".pdf":
@@ -110,4 +108,4 @@ if __name__ == "__main__":
         "-v", "--verbose", action="store_true", help="increase output verbosity"
     )
     args = parser.parse_args()
-    main(args.src_dir, args.concat_direction, args.dst_path)
+    concat_img(args.src_dir, args.concat_direction, args.dst_path)
