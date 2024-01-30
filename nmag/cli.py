@@ -16,7 +16,11 @@ from nmag.utils import get_logger
 
 
 def get_args():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description="details",
+        usage='use "%(prog)s --help" for more information',
+        formatter_class=argparse.RawTextHelpFormatter,
+    )
     parser.add_argument(
         "-sd",
         "--src_dir",
@@ -37,13 +41,13 @@ def get_args():
         "--dst_path",
         type=str,
         default="",
-        help="the output path",
+        help="the output filepath",
     )
     parser.add_argument(
         "-bak",
         "--backup",
         action="store_false",
-        help="backup original data to <file_path>__bak",
+        help="backup original data to <output filepath>__bak",
     )
     parser.add_argument(
         "-direction",
@@ -66,7 +70,7 @@ def get_args():
         default=[".pdf", ".txt"],
     )
     parser.add_argument(
-        "--range",
+        "-range",
         type=str,
         default="[5,20]",
         help="extract pdf range from page a to b: '[a,b]'",
@@ -74,7 +78,15 @@ def get_args():
     parser.add_argument(
         "-v", "--verbose", action="store_true", help="increase output verbosity"
     )
-    parser.add_argument("cmd", default="")
+    cmd_string = """The available cmds are described in format of `cmd | desc | args`:
+    "icat":     | concatenate images                | -sd, -direction, -dp
+    "cip":      | correct imgpath in md(s)          | -sd|-sp, -bak
+    "rir":      | remove redundant images from md   | -sd, -bak, -ignore
+    "rn":       | rename md                         | -sp, -dp, -auto_cip -bak
+    "p2i":      | pdf to img                        | -sp, -dd
+    "p2m":      | pdf(s) to md                      | -sp|-sd, -dp
+    "pe":       | extract subpages from pdf to pdf  | -sp, -dp, -range"""
+    parser.add_argument("cmd", help=cmd_string)
     args = parser.parse_args()
     return args
 
