@@ -13,6 +13,7 @@ from nmag.pmage.pdf2img import pdf_to_img
 from nmag.pmage.pdf2md import pdf_to_md, pdf_to_md_batch
 from nmag.pmage.pdfext import pdf_extract
 from nmag.utils import get_logger
+from nmag.fmage import makedir
 
 
 def get_args():
@@ -76,16 +77,23 @@ def get_args():
         help="extract pdf range from page a to b: '[a,b]'",
     )
     parser.add_argument(
+        "--mirror_rule",
+        type=str,
+        default="['0_MOOC_Videos', 'Drive/sync/0_notes_all/0_MOOC_notes']",
+        help="replace path of src path with part of dst path",
+    )
+    parser.add_argument(
         "-v", "--verbose", action="store_true", help="increase output verbosity"
     )
     cmd_string = """The available cmds are described in format of `cmd | desc | args`:
-    "icat":     | concatenate images                | -sd, -direction, -dp
-    "cip":      | correct imgpath in md(s)          | -sd|-sp, -bak
-    "rir":      | remove redundant images from md   | -sd, -bak, -ignore
-    "rn":       | rename md                         | -sp, -dp, -auto_cip -bak
-    "p2i":      | pdf to img                        | -sp, -dd
-    "p2m":      | pdf(s) to md                      | -sp|-sd, -dp
-    "pe":       | extract subpages from pdf to pdf  | -sp, -dp, -range"""
+    "icat":     | concatenate images                    | -sd, -direction, -dp
+    "cip":      | correct imgpath in md(s)              | -sd|-sp, -bak
+    "rir":      | remove redundant images from md       | -sd, -bak, -ignore
+    "rn":       | rename md                             | -sp, -dp, -auto_cip -bak
+    "p2i":      | pdf to img                            | -sp, -dd
+    "p2m":      | pdf(s) to md                          | -sp|-sd, -dp
+    "pe":       | extract subpages from pdf to pdf      | -sp, -dp, -range
+    "md":       | makedir on primal and mirror paths    | -sd"""
     parser.add_argument("cmd", help=cmd_string)
     args = parser.parse_args()
     return args
@@ -97,10 +105,6 @@ def run():
 
     if args.src_dir != "" and args.src_path != "":
         raise ValueError("You can't set both input filepath and input folder!")
-
-    LEGAL_CMDs = ["icat", "cip", "rir", "rn", "p2i", "p2m", "pe"]
-    if args.cmd not in LEGAL_CMDs:
-        raise ValueError(f"Legal command doesnot include {args.cmd}")
 
     if args.cmd == "icat":
         concat_img(args.src_dir, args.concat_direction, args.dst_path)
@@ -133,6 +137,10 @@ def run():
     elif args.cmd == "pe":
         rangelist = eval(args.range)
         pdf_extract(args.src_path, args.dst_path, rangelist[0], rangelist[1])
+    elif args.cmd == "md":
+        makedir(args.src_dir, eval(args.mirror_rule))
+    else:
+        raise ValueError(f"Legal command doesnot include {args.cmd}")
 
 
 if __name__ == "__main__":
