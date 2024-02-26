@@ -83,6 +83,11 @@ def get_args():
         help="replace path of src path with part of dst path",
     )
     parser.add_argument(
+        "--linking",
+        action="store_false",
+        help="make shortcut link between two dirs",
+    )
+    parser.add_argument(
         "-v", "--verbose", action="store_true", help="increase output verbosity"
     )
     cmd_string = """The available cmds are described in format of `cmd | desc | args`:
@@ -93,7 +98,7 @@ def get_args():
     "p2i":      | pdf to img                            | -sp, -dd
     "p2m":      | pdf(s) to md                          | -sp|-sd, -dp
     "pe":       | extract subpages from pdf to pdf      | -sp, -dp, -range
-    "md":       | makedir on primal and mirror paths    | -sd"""
+    "md":       | makedir on primal and mirror paths    | -sd, --mirror_rule, --linking"""
     parser.add_argument("cmd", help=cmd_string)
     args = parser.parse_args()
     return args
@@ -138,7 +143,7 @@ def run():
         rangelist = eval(args.range)
         pdf_extract(args.src_path, args.dst_path, rangelist[0], rangelist[1])
     elif args.cmd == "md":
-        makedir(args.src_dir, eval(args.mirror_rule))
+        makedir(args.src_dir, eval(args.mirror_rule), args.linking)
     else:
         raise ValueError(f"Legal command doesnot include {args.cmd}")
 
