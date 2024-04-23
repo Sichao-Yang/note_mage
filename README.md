@@ -16,6 +16,7 @@ This is a collection of useful commands for note management.
 It works with `typora` markdown file by collecting all redundant image files into a folder named 'red_files' for manual check & removal.
 
 Details:
+
     1. folder path extracting:
         1. recursively get all paths in the target folder
         2. extract md files' path from all paths, all paths include only img paths
