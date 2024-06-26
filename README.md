@@ -6,8 +6,54 @@
 
 This is a collection of useful commands for note management.
 
-
 # Quick Start
+
+## Install
+
+1. `pip install requirements.txt`
+2. `python setup.py install`
+
+## Usage
+
+```python
+usage: use "nmag --help" for more information
+
+details
+
+positional arguments:
+  cmd                   The available cmds are described in format of `cmd | desc | args`:
+                            "icat":     | concatenate images                    | -sd, -direction, -dp
+                            "cip":      | correct imgpath in md(s)              | -sd|-sp, -bak
+                            "rir":      | remove redundant images from md       | -sd, -bak, -ignore
+                            "rn":       | rename md                             | -sp, -dp, -auto_cip -bak
+                            "p2i":      | pdf to img                            | -sp, -dd
+                            "p2m":      | pdf(s) to md                          | -sp|-sd, -dp
+                            "pe":       | extract subpages from pdf to pdf      | -sp, -dp, -range
+                            "md":       | makedir on primal and mirror paths    | -sd, --mirror_rule, --linking
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -sd SRC_DIR, --src_dir SRC_DIR
+                        the source folder
+  -sp SRC_PATH, --src_path SRC_PATH
+                        source file
+  -dd DST_DIR, --dst_dir DST_DIR
+                        the output folder
+  -dp DST_PATH, --dst_path DST_PATH
+                        the output filepath
+  -bak, --backup        backup original data to <output filepath>__bak
+  -direction CONCAT_DIRECTION, --concat_direction CONCAT_DIRECTION
+                        the direction for concatenation, v or h
+  -auto_cip, --auto_imgpath_change
+                        change imgpath automatically after renamed file
+  -ignore IGNORE_ITEMS [IGNORE_ITEMS ...], --ignore_items IGNORE_ITEMS [IGNORE_ITEMS ...]
+                        items to be ignored when collecting redundant files
+  -range RANGE          extract pdf range from page a to b: '[a,b]'
+  --mirror_rule MIRROR_RULE
+                        replace path of src path with part of dst path
+  --linking             make shortcut link between two dirs
+  -v, --verbose         increase output verbosity
+```
 
 # Dive Deeper
 
