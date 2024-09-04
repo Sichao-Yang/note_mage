@@ -27,9 +27,8 @@ setup(
     python_requires=">=3.6",
     install_requires=packages,
     entry_points={
-        # 'console_scripts': ['mycli=mymodule:cli'],
         "console_scripts": [
-            "nmag=nmag.cli:run",
+            "nmag=nmag.main:run",
         ],
     },
     include_package_data=True,

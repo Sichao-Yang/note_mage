@@ -14,12 +14,18 @@ from nmag.pmage.pdf2md import pdf_to_md, pdf_to_md_batch
 from nmag.pmage.pdfext import pdf_extract
 from nmag.utils import get_logger
 from nmag.fmage import makedir
+from nmag.vid_duration import calc_vid_duration
+
+nmag_desc = """
+--------------------------NMag--------------------------
+    Welcome to nmag, a toolset for file manipulations
+"""
 
 
 def get_args():
     parser = argparse.ArgumentParser(
-        description="details",
-        usage='use "%(prog)s --help" for more information',
+        description=nmag_desc,
+        usage='Use "%(prog)s --help|-h" for more information on the options',
         formatter_class=argparse.RawTextHelpFormatter,
     )
     parser.add_argument(
@@ -27,78 +33,81 @@ def get_args():
         "--src_dir",
         type=str,
         default="",
-        help="the source folder",
+        help="str: the source folder",
     )
-    parser.add_argument("-sp", "--src_path", type=str, default="", help="source file")
+    parser.add_argument("-sp", "--src_path", type=str, default="", help="the source filepath")
     parser.add_argument(
         "-dd",
         "--dst_dir",
         type=str,
         default="",
-        help="the output folder",
+        help="str: the output folder",
     )
     parser.add_argument(
         "-dp",
         "--dst_path",
         type=str,
         default="",
-        help="the output filepath",
+        help="str: the output filepath",
     )
     parser.add_argument(
         "-bak",
         "--backup",
         action="store_false",
-        help="backup original data to <output filepath>__bak",
+        help="bool: backup original data to <output_filepath>__bak",
     )
     parser.add_argument(
         "-direction",
         "--concat_direction",
         type=str,
         default="v",
-        help="the direction for concatenation, v or h",
+        help="str: the direction for concatenation, v or h",
     )
     parser.add_argument(
         "-auto_cip",
         "--auto_imgpath_change",
         action="store_true",
-        help="change imgpath automatically after renamed file",
+        help="bool: change imgpath automatically after renamed file",
     )
     parser.add_argument(
         "-ignore",
         "--ignore_items",
         nargs="+",
-        help="items to be ignored when collecting redundant files",
+        help="list: items to be ignored when collecting redundant files",
         default=[".pdf", ".txt"],
     )
     parser.add_argument(
         "-range",
         type=str,
         default="[5,20]",
-        help="extract pdf range from page a to b: '[a,b]'",
+        help="str: extract pdf range from page a to b: '[a,b]'",
     )
     parser.add_argument(
         "--mirror_rule",
         type=str,
         default="['0_MOOC_Videos', 'Drive/sync/0_notes_all/0_MOOC_notes']",
-        help="replace path of src path with part of dst path",
+        help="str: replace path of src path with part of dst path",
     )
     parser.add_argument(
         "--linking",
         action="store_false",
-        help="make shortcut link between two dirs",
+        help="bool: make shortcut link between two dirs",
     )
     parser.add_argument(
-        "-v", "--verbose", action="store_true", help="increase output verbosity"
+        "-v", "--verbose", action="store_true", help="bool: increase output verbosity"
     )
-    cmd_string = """The available cmds are described in format of `cmd | desc | args`:
-    "icat":     | concatenate images                    | -sd, -direction, -dp
-    "cip":      | correct imgpath in md(s)              | -sd|-sp, -bak
-    "rir":      | remove redundant images from md       | -sd, -bak, -ignore
-    "rn":       | rename md                             | -sp, -dp, -auto_cip -bak
-    "p2i":      | pdf to img                            | -sp, -dd
-    "p2m":      | pdf(s) to md                          | -sp|-sd, -dp
-    "pe":       | extract subpages from pdf to pdf      | -sp, -dp, -range
-    "md":       | makedir on primal and mirror paths    | -sd, --mirror_rule, --linking"""
+    cmd_string = """
+The available cmds are described in format of `cmd | desc | args`:
+"icat":     | concatenate images                    | -sd, -direction, -dp
+"cip":      | correct imgpath in md(s)              | -sd|-sp, -bak
+"rir":      | remove redundant images from md       | -sd, -bak, -ignore
+"rn":       | rename md                             | -sp, -dp, -auto_cip -bak
+"p2i":      | pdf to img                            | -sp, -dd
+"p2m":      | pdf(s) to md                          | -sp|-sd, -dp
+"pe":       | extract subpages from pdf to pdf      | -sp, -dp, -range
+"md":       | makedir on primal and mirror paths    | -sd, --mirror_rule, --linking
+"vd":       | video durations in a given folder     | -sd
+"""
     parser.add_argument("cmd", help=cmd_string)
     args = parser.parse_args()
     return args
@@ -144,6 +153,8 @@ def run():
         pdf_extract(args.src_path, args.dst_path, rangelist[0], rangelist[1])
     elif args.cmd == "md":
         makedir(args.src_dir, eval(args.mirror_rule), args.linking)
+    elif args.cmd == "vd":
+        calc_vid_duration(args.src_dir)
     else:
         raise ValueError(f"Legal command doesnot include {args.cmd}")
 
