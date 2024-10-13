@@ -54,7 +54,7 @@ def get_args():
         "-bak",
         "--backup",
         action="store_false",
-        help="bool: backup original data to <output_filepath>__bak",
+        help="bool: backup original data to <output_filepath>__bak (default: True)",
     )
     parser.add_argument(
         "-direction",
@@ -73,7 +73,7 @@ def get_args():
         "-ignore",
         "--ignore_items",
         nargs="+",
-        help="list: items to be ignored when collecting redundant files",
+        help='list: items to be ignored when collecting redundant files (default: [".pdf", ".txt"])',
         default=[".pdf", ".txt"],
     )
     parser.add_argument(
@@ -93,9 +93,7 @@ def get_args():
         action="store_false",
         help="bool: make shortcut link between two dirs",
     )
-    parser.add_argument(
-        "-v", "--verbose", action="store_true", help="bool: increase output verbosity"
-    )
+    parser.add_argument("-v", "--verbose", action="store_true", help="bool: increase output verbosity")
     cmd_string = """
 The available cmds are described in format of `cmd | desc | args`:
 "icat":     | concatenate images                    | -sd, -direction, -dp

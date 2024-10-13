@@ -81,9 +81,10 @@ class MdRedImgRemover:
         # work on src_dir, backup files into bak_dir
         if backup:
             backup_dir(src_dir)
-
+            logging.info(f"folder: {src_dir} backed.")
         self.work_dir = osp.abspath(src_dir)
         self.ignore_items = ignore_items
+        logging.info(f"ignore_items: {ignore_items}")
 
     def get_imgpath_fromdir(self):
         logging.info(f"Processing folder: {self.work_dir}")
