@@ -33,67 +33,71 @@ def get_args():
         "--src_dir",
         type=str,
         default="",
-        help="str: the source folder",
+        help="str: the source folder, (default: '%(default)s')",
     )
-    parser.add_argument("-sp", "--src_path", type=str, default="", help="the source filepath")
+    parser.add_argument(
+        "-sp", "--src_path", type=str, default="", help="str: the source filepath, (default: '%(default)s')"
+    )
     parser.add_argument(
         "-dd",
         "--dst_dir",
         type=str,
         default="",
-        help="str: the output folder",
+        help="str: the output folder, (default: '%(default)s')",
     )
     parser.add_argument(
         "-dp",
         "--dst_path",
         type=str,
         default="",
-        help="str: the output filepath",
+        help="str: the output filepath, (default: '%(default)s')",
     )
     parser.add_argument(
         "-bak",
         "--backup",
         action="store_false",
-        help="bool: backup original data to <output_filepath>__bak (default: True)",
+        help="bool: backup original data to <output_filepath>__bak, (default: '%(default)s')",
     )
     parser.add_argument(
         "-direction",
         "--concat_direction",
         type=str,
         default="v",
-        help="str: the direction for concatenation, v or h",
+        help="str: the direction for concatenation, v or h, (default: '%(default)s')",
     )
     parser.add_argument(
         "-auto_cip",
         "--auto_imgpath_change",
         action="store_true",
-        help="bool: change imgpath automatically after renamed file",
+        help="bool: change imgpath automatically after renamed file, (default: '%(default)s')",
     )
     parser.add_argument(
         "-ignore",
         "--ignore_items",
         nargs="+",
-        help='list: items to be ignored when collecting redundant files (default: [".pdf", ".txt"])',
+        help="list: items to be ignored when collecting redundant files, (default: '%(default)s')",
         default=[".pdf", ".txt"],
     )
     parser.add_argument(
         "-range",
         type=str,
         default="[5,20]",
-        help="str: extract pdf range from page a to b: '[a,b]'",
+        help="str: extract pdf range from page a to b, (default: '%(default)s')",
     )
     parser.add_argument(
         "--mirror_rule",
         type=str,
         default="['0_MOOC_Videos', 'Drive/sync/0_notes_all/0_MOOC_notes']",
-        help="str: replace path of src path with part of dst path",
+        help="str: replace path of src path with part of dst path, (default: '%(default)s')",
     )
     parser.add_argument(
         "--linking",
         action="store_false",
-        help="bool: make shortcut link between two dirs",
+        help="bool: make shortcut link between two dirs, (default: '%(default)s')",
     )
-    parser.add_argument("-v", "--verbose", action="store_true", help="bool: increase output verbosity")
+    parser.add_argument(
+        "-v", "--verbose", action="store_true", help="bool: increase output verbosity, (default: '%(default)s')"
+    )
     cmd_string = """
 The available cmds are described in format of `cmd | desc | args`:
 "icat":     | concatenate images                    | -sd, -direction, -dp
@@ -106,7 +110,7 @@ The available cmds are described in format of `cmd | desc | args`:
 "md":       | makedir on primal and mirror paths    | -sd, --mirror_rule, --linking
 "vd":       | video durations in a given folder     | -sd
 """
-    parser.add_argument("cmd", help=cmd_string)
+    parser.add_argument("task", help=cmd_string)
     args = parser.parse_args()
     return args
 
@@ -118,43 +122,43 @@ def run():
     if args.src_dir != "" and args.src_path != "":
         raise ValueError("You can't set both input filepath and input folder!")
 
-    if args.cmd == "icat":
+    if args.task == "icat":
         concat_img(args.src_dir, args.concat_direction, args.dst_path)
-    elif args.cmd == "cip":
+    elif args.task == "cip":
         if args.src_dir != "":
             correct_imgpath_batch(args.src_dir, backup=args.backup)
         else:
             correct_imgpath(args.src_path, backup=args.backup)
-    elif args.cmd == "rir":
+    elif args.task == "rir":
         tp = MdRedImgRemover(
             src_dir=args.src_dir,
             backup=args.backup,
             ignore_items=args.ignore_items,
         )
         tp.run()
-    elif args.cmd == "rn":
+    elif args.task == "rn":
         md_rename(
             args.src_path,
             args.dst_path,
             backup=args.backup,
             auto_imgpath_change=args.auto_imgpath_change,
         )
-    elif args.cmd == "p2i":
+    elif args.task == "p2i":
         pdf_to_img(args.src_path, args.dst_dir)
-    elif args.cmd == "p2m":
+    elif args.task == "p2m":
         if args.src_dir != "":
             pdf_to_md_batch(args.src_dir, args.dst_dir)
         else:
             pdf_to_md(args.src_path, args.dst_dir)
-    elif args.cmd == "pe":
+    elif args.task == "pe":
         rangelist = eval(args.range)
         pdf_extract(args.src_path, args.dst_path, rangelist[0], rangelist[1])
-    elif args.cmd == "md":
+    elif args.task == "md":
         makedir(args.src_dir, eval(args.mirror_rule), args.linking)
-    elif args.cmd == "vd":
+    elif args.task == "vd":
         calc_vid_duration(args.src_dir)
     else:
-        raise ValueError(f"Legal command doesnot include {args.cmd}")
+        raise ValueError(f"Legal command doesnot include {args.task}")
 
 
 if __name__ == "__main__":
