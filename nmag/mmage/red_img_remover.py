@@ -12,9 +12,9 @@ from utils import *
 DEBUG = False
 
 
-def get_all_files(dir, filelist):
-    ps = os.listdir(dir)
-    ps = [osp.join(dir, p) for p in ps]
+def get_all_files(root_dir, filelist):
+    ps = os.listdir(root_dir)
+    ps = [osp.join(root_dir, p) for p in ps]
     fs = [p for p in ps if osp.isfile(p)]
     filelist.extend(fs)
     for f in fs:
@@ -79,10 +79,10 @@ class MdRedImgRemover:
 
     def __init__(self, src_dir, backup=True, ignore_items=[]) -> None:
         # work on src_dir, backup files into bak_dir
-        if backup:
-            backup_dir(src_dir)
-            logging.info(f"folder: {src_dir} backed.")
         self.work_dir = osp.abspath(src_dir)
+        if backup:
+            bak_dir = backup_dir(self.work_dir)
+            logging.info(f"folder: {self.work_dir} backed to: {bak_dir}.")
         self.ignore_items = ignore_items
         logging.info(f"ignore_items: {ignore_items}")
 

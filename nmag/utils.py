@@ -53,6 +53,7 @@ def backup_dir(src_dir):
         shutil.rmtree(bak_dir)
     os.makedirs(bak_dir)
     shutil.copytree(src=src_dir, dst=bak_dir, dirs_exist_ok=True)
+    return bak_dir
 
 
 def backup_file(src_path):
