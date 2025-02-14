@@ -76,7 +76,7 @@ def get_args():
         "--ignore_items",
         nargs="+",
         help="list: items to be ignored when collecting redundant files, (default: '%(default)s')",
-        default=[".pdf", ".txt"],
+        default=[".pdf", ".txt", ".pptx"],
     )
     parser.add_argument(
         "-range",
