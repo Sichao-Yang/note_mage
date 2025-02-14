@@ -15,9 +15,7 @@ def get_logger(filename, verb_level="info", name=None, method=None):
     name：log对象的名字，可以不填
     """
     level_dict = {"debug": logging.DEBUG, "info": logging.INFO, "warn": logging.WARNING}
-    formatter = logging.Formatter(
-        "[%(asctime)s][%(filename)s][line:%(lineno)d][%(levelname)s] %(message)s"
-    )
+    formatter = logging.Formatter("[%(asctime)s][%(filename)s][line:%(lineno)d][%(levelname)s] %(message)s")
     logger = logging.getLogger(name)
     logger.setLevel(level_dict[verb_level])
 

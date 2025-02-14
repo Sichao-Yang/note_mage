@@ -13,7 +13,7 @@ from nmag.pmage.pdf2img import pdf_to_img
 from nmag.pmage.pdf2md import pdf_to_md, pdf_to_md_batch
 from nmag.pmage.pdfext import pdf_extract
 from nmag.utils import get_logger
-from nmag.fmage import makedir
+from nmag.fmage import makedir, get_relative_path
 from nmag.vid_duration import calc_vid_duration
 
 nmag_desc = """
@@ -109,6 +109,7 @@ The available cmds are described in format of `cmd | desc | args`:
 "pe":       | extract subpages from pdf to pdf      | -sp, -dp, -range
 "md":       | makedir on primal and mirror paths    | -sd, --mirror_rule, --linking
 "vd":       | video durations in a given folder     | -sd
+"rp":       | get relative path from src to dst      | -sp -dp
 """
     parser.add_argument("task", help=cmd_string)
     args = parser.parse_args()
@@ -121,6 +122,9 @@ def run():
 
     if args.src_dir != "" and args.src_path != "":
         raise ValueError("You can't set both input filepath and input folder!")
+    if args.dst_dir != "" and args.dst_path != "":
+        raise ValueError("You can't set both output filepath and output folder!")
+
 
     if args.task == "icat":
         concat_img(args.src_dir, args.concat_direction, args.dst_path)
@@ -157,6 +161,8 @@ def run():
         makedir(args.src_dir, eval(args.mirror_rule), args.linking)
     elif args.task == "vd":
         calc_vid_duration(args.src_dir)
+    elif args.task == "rp":
+        get_relative_path(src=args.src_path, dst=args.dst_path)
     else:
         raise ValueError(f"Legal command doesnot include {args.task}")
 

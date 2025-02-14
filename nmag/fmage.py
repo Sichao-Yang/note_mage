@@ -3,6 +3,14 @@ from os import path as osp
 from win32com.client import Dispatch
 
 
+def get_relative_path(src, dst):
+    if src == "":
+        src = os.getcwd()
+    assert dst != "", "You need to set the target path"
+    relative_path = os.path.relpath(dst, src)
+    print(f"Relative path from\n{src}\nto\n{dst}\nis:\n{relative_path}")
+
+
 def create_link(link_path, target_path):
     # link_path: Path to be saved (shortcut)
     # target: The shortcut target file or folder
