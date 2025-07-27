@@ -109,7 +109,7 @@ The available cmds are described in format of `cmd | desc | args`:
 "pe":       | extract subpages from pdf to pdf      | -sp, -dp, -range
 "md":       | makedir on primal and mirror paths    | -sd, --mirror_rule, --linking
 "vd":       | video durations in a given folder     | -sd
-"rp":       | get relative path from src to dst      | -sp -dp
+"rp":       | get relative path from src_dir to dst | -sd(default: pwd) -dp
 """
     parser.add_argument("task", help=cmd_string)
     args = parser.parse_args()
@@ -162,7 +162,7 @@ def run():
     elif args.task == "vd":
         calc_vid_duration(args.src_dir)
     elif args.task == "rp":
-        get_relative_path(src=args.src_path, dst=args.dst_path)
+        get_relative_path(src=args.src_dir, dst=args.dst_path)
     else:
         raise ValueError(f"Legal command doesnot include {args.task}")
 
