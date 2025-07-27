@@ -98,7 +98,7 @@ def get_args():
     parser.add_argument(
         "-v", "--verbose", action="store_true", help="bool: increase output verbosity, (default: '%(default)s')"
     )
-    cmd_string = """
+    cmd_string = r"""
 The available cmds are described in format of `cmd | desc | args`:
 "icat":     | concatenate images                    | -sd, -direction, -dp
 "cip":      | correct imgpath in md(s)              | -sd|-sp, -bak
@@ -109,7 +109,7 @@ The available cmds are described in format of `cmd | desc | args`:
 "pe":       | extract subpages from pdf to pdf      | -sp, -dp, -range
 "md":       | makedir on primal and mirror paths    | -sd, --mirror_rule, --linking
 "vd":       | video durations in a given folder     | -sd
-"rp":       | get relative path from src_dir to dst | -sd(default: pwd) -dp
+"rp":       | get relative path from src_dir to dst | [-sd(default: pwd)] -dp | exmaple: rp -sp '\\192.168.1.30\home\Drive\sync\0_notes_all'
 """
     parser.add_argument("task", help=cmd_string)
     args = parser.parse_args()
