@@ -12,7 +12,9 @@ def pdf_extract(pdf_in, pdf_out, start, end):
     # 读取pdf
     reader = PdfReader(pdf_in)
     logging.info(f"successfully read pdf: {pdf_in}, total {len(reader.pages)} pages")
-    for i in range(start, end):
+    if (end >= len(reader.pages)):
+        logging.warn(f"target end index is larger than pdf's total length, round down from {end} to {len(reader.pages)-1}")
+    for i in range(start, len(reader.pages)):
         writer.add_page(reader.pages[i])
     # 写出pdf
     logging.info(f"write page {start}-{end} to {pdf_out}")
